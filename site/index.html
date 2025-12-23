@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile World: Benchmarking Autonomous Mobile Agents</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+    <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#overview">Overview</a>
+        <a href="#getting-started">Getting Started</a>
+        <a href="#citation">Citation</a>
+    </nav>
+
+    <main class="container">
+        <!-- Title Section -->
+        <header class="header">
+            <h1>Mobile World: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented
+                Environments</h1>
+
+            <p class="authors">
+                <span class="author">Quyu Kong<sup>*,1</sup></span>,
+                <span class="author">Xu Zhang<sup>*,1</sup></span>,
+                <span class="author">Zhenyu Yang<sup>2</sup></span>,
+                <span class="author">Nolan Gao<sup>3</sup></span>,
+                <span class="author">Chen Liu<sup>1</sup></span>,
+                <span class="author">Panrong Tong<sup>1</sup></span>,
+                <span class="author">Chenglin Cai<sup>1</sup></span>,
+                <span class="author">Hanzhang Zhou<sup>1</sup></span>,
+                <span class="author">Jianan Zhang<sup>1</sup></span>,
+                <span class="author">Liangyu Chen<sup>1</sup></span>,
+                <span class="author">Zhidan Liu<sup>2</sup></span>,
+                <span class="author">Steven HOI<sup>1</sup></span>,
+                <span class="author">Yue Wang<sup>1,&#9993;</sup></span>
+            </p>
+
+            <p class="affiliations">
+                <sup>1</sup>Tongyi Lab, Alibaba Group &nbsp;&nbsp;
+                <sup>2</sup>HKUST (GZ) &nbsp;&nbsp;
+                <sup>3</sup>University of Florida<br>
+                <sup>*</sup>Equal contribution &nbsp;&nbsp;
+                <span class="email">&#9993; yue.w@alibaba-inc.com</span>
+            </p>
+
+            <div class="links">
+                <a href="https://arxiv.org/abs/2512.19432" class="link-btn">Paper</a>
+                <a href="https://github.com/Tongyi-MAI/MobileWorld" class="link-btn">Code</a>
+                <a href="#citation" class="link-btn">Cite</a>
+            </div>
+        </header>
+
+        <!-- Leaderboard -->
+        <section id="leaderboard" class="section">
+            <h2>Leaderboard</h2>
+            <p>Success rate (%) on Mobile World. We report overall SR and breakdown by task category: GUI-Only tasks
+                (116), agent-user interaction tasks (45), and MCP-augmented tasks (40).</p>
+
+            <div class="table-wrapper">
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Model</th>
+                            <th>Max Steps</th>
+                            <th class="sortable" data-key="overall">Overall <span class="sort-icon">▼</span></th>
+                            <th class="sortable" data-key="gui_only">GUI-Only <span class="sort-icon"></span></th>
+                            <th class="sortable" data-key="user_int">User-Int. <span class="sort-icon"></span></th>
+                            <th class="sortable" data-key="mcp">MCP <span class="sort-icon"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Loaded from leaderboard.json -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section id="overview" class="section">
+            <h2>Overview</h2>
+
+            <p><strong>Mobile World</strong> is a substantially more challenging mobile-use benchmark designed to better
+                reflect real-world mobile usage. It comprises <strong>201 tasks</strong> across <strong>20
+                    applications</strong>, featuring long-horizon, cross-app tasks, and novel task categories including
+                agent-user interaction and MCP-augmented tasks.</p>
+
+            <p>The difficulty of Mobile World is twofold:</p>
+
+            <p><strong>Long-horizon, cross-application tasks.</strong> Mobile World tasks require on average 27.8
+                completion steps, nearly twice as many as 14.3 steps required in AndroidWorld. Moreover, 62.2% of tasks
+                involve cross-application workflows compared to only 9.5% in AndroidWorld.</p>
+
+            <p><strong>Novel task categories.</strong> Mobile World extends beyond standard GUI manipulation by
+                introducing (1) agent-user interaction tasks (22.4%) that evaluate an agent's ability to handle
+                ambiguous instructions through collaborative dialogue, and (2) MCP-augmented tasks (19.9%) that require
+                hybrid-usage of GUI navigation and external tool invocations via the Model Context Protocol.</p>
+        </section>
+
+        <!-- Benchmark Comparison -->
+        <section class="section">
+            <h2>Benchmark Comparison</h2>
+            <p>Comparison of online Mobile GUI Agent Benchmarks. Mobile World uniquely enables deterministic evaluation
+                even for applications requiring backends (e.g., messaging) by utilizing self-hosted environments. We
+                also introduce novel task paradigms: agent-user interaction and Model Context Protocol (MCP)
+                augmentation.</p>
+
+            <div class="table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark</th>
+                            <th>#Apps</th>
+                            <th>#Tasks</th>
+                            <th>Agent-User Int.</th>
+                            <th>MCP-Aug.</th>
+                            <th>Backend-Req. Apps</th>
+                            <th>Deterministic Eval.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AndroidArena</td>
+                            <td>16</td>
+                            <td>221</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                            <td class="no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>A3</td>
+                            <td>20</td>
+                            <td>201</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                            <td class="no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Pro-Bench</td>
+                            <td>34</td>
+                            <td>200</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                            <td class="no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>AndroidDaily</td>
+                            <td>48</td>
+                            <td>235</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                            <td class="no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>SPA-Bench</td>
+                            <td>66</td>
+                            <td>340</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                            <td class="no">✗</td>
+                        </tr>
+                        <tr class="separator">
+                            <td colspan="7"></td>
+                        </tr>
+                        <tr>
+                            <td>MobileAgentBench</td>
+                            <td>10</td>
+                            <td>100</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>AndroidLab</td>
+                            <td>9</td>
+                            <td>138</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>AndroidWorld</td>
+                            <td>20</td>
+                            <td>116</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="no">✗</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr class="separator">
+                            <td colspan="7"></td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td><strong>MobileWorld (Ours)</strong></td>
+                            <td><strong>20</strong></td>
+                            <td><strong>201</strong></td>
+                            <td class="yes">✓</td>
+                            <td class="yes">✓</td>
+                            <td class="yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- System Architecture -->
+        <section class="section">
+            <h2>System Architecture</h2>
+
+            <figure class="figure">
+                <img src="assets/fig_system_architecture.png" alt="System Architecture of Mobile World">
+                <figcaption>The system architecture of Mobile World consists of two main components.
+                    <strong>Left:</strong> the host machine is where GUI agents receive task instructions and optionally
+                    interact with users for clarification, then choose between GUI actions or MCP tool calls to complete
+                    tasks. <strong>Right:</strong> the docker environment contains an isolated Android ecosystem with
+                    emulators, self-hosted app backends, and an evaluator that verifies task completion through text
+                    matching, backend database, local storage, and app callbacks.
+                </figcaption>
+            </figure>
+        </section>
+
+        <!-- Key Findings -->
+        <section class="section">
+            <h2>Key Findings</h2>
+
+            <p>Our evaluation reveals a sharp performance drop compared to AndroidWorld, where the best agents achieve
+                success rates exceeding 90%. On Mobile World:</p>
+
+            <p>The top-performing agentic framework (GPT-5 + UI-Ins-7B) reaches only <strong>51.7%</strong> overall
+                success rate, highlighting substantial room for improvement.</p>
+
+            <p>End-to-end models show a stark capability collapse on novel task categories: most baseline models score
+                below 10% on agent-user interaction and near 0% on MCP-augmented tasks.</p>
+
+            <p>Our error analysis identifies five open research challenges: (1) user ambiguity detection and
+                clarification engagement, (2) MCP context management, (3) long-term memory and state checking, (4)
+                complex logic reasoning, and (5) spatial-temporal context awareness.</p>
+        </section>
+
+        <!-- Getting Started -->
+        <section id="getting-started" class="section">
+            <h2>Getting Started</h2>
+
+            <p><strong>Requirements:</strong> Docker with privileged container support, KVM for Android emulator
+                acceleration, Python 3.12+, Linux host system (Windows WSL2 + KVM also supported).</p>
+
+            <p><strong>Installation:</strong></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">git clone https://github.com/Tongyi-MAI/MobileWorld.git
+cd MobileWorld
+uv sync</code></pre>
+            </div>
+
+            <p><strong>Check environment and pull Docker image:</strong></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">sudo mw env check</code></pre>
+            </div>
+
+            <p><strong>Launch Docker containers:</strong></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">sudo mw env run --count 5 --launch-interval 20</code></pre>
+            </div>
+
+            <p><strong>Run evaluation:</strong></p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">sudo mw eval \
+    --agent_type qwen3vl \
+    --task ALL \
+    --max_round 50 \
+    --model_name Qwen3-VL-235B-A22B \
+    --llm_base_url [openai_compatible_url] \
+    --enable_mcp</code></pre>
+            </div>
+        </section>
+
+        <!-- Citation -->
+        <section id="citation" class="section">
+            <h2>Citation</h2>
+            <p>If you find Mobile World useful in your research, please cite our paper:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bibtex">@article{mobileworld2025,
+  title={MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive, and MCP-Augmented Environments},
+  author={Quyu Kong and Xu Zhang and Zhenyu Yang and Nolan Gao and Chen Liu and Panrong Tong and Chenglin Cai and Hanzhang Zhou and Jianan Zhang and Liangyu Chen and Zhidan Liu and Steven Hoi and Yue Wang},
+  journal={arXiv preprint arXiv:2512.19432},
+  year={2025}
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Acknowledgements -->
+        <section class="section">
+            <h2>Acknowledgements</h2>
+            <p>We thank <a href="https://github.com/google-research/android_world">Android World</a> and <a
+                    href="https://github.com/THUDM/Android-Lab">Android-Lab</a> for their open source contributions.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Mobile World Team &middot; <a href="https://github.com/Tongyi-MAI/MobileWorld">GitHub</a> &middot; <a
+                href="https://github.com/Tongyi-MAI/MobileWorld/issues">Issues</a></p>
+    </footer>
+
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Copy code function
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.querySelector('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Leaderboard
+        document.addEventListener('DOMContentLoaded', async function () {
+            const table = document.getElementById('leaderboard-table');
+            const tbody = document.getElementById('leaderboard-body');
+            const headers = table.querySelectorAll('th.sortable');
+            let currentSort = { key: 'overall', desc: true };
+            let leaderboardData = [];
+
+            // Load data from JSON
+            try {
+                const response = await fetch('leaderboard.json');
+                const data = await response.json();
+                leaderboardData = data.results;
+                renderTable();
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="7">Failed to load leaderboard data.</td></tr>';
+                console.error('Error loading leaderboard:', error);
+            }
+
+            // Sort click handlers
+            headers.forEach(header => {
+                header.addEventListener('click', function () {
+                    const key = this.dataset.key;
+                    const desc = currentSort.key === key ? !currentSort.desc : true;
+                    currentSort = { key, desc };
+                    renderTable();
+                    updateSortIcons(this, desc);
+                });
+            });
+
+            function renderTable() {
+                // Sort data
+                const sorted = [...leaderboardData].sort((a, b) => {
+                    const aVal = a[currentSort.key] ?? -1;
+                    const bVal = b[currentSort.key] ?? -1;
+                    return currentSort.desc ? bVal - aVal : aVal - bVal;
+                });
+
+                // Render rows
+                tbody.innerHTML = sorted.map(row => `
+                    <tr>
+                        <td>${row.category}</td>
+                        <td>${row.model}</td>
+                        <td>${row.max_steps}</td>
+                        <td>${row.overall}</td>
+                        <td>${row.gui_only ?? '-'}</td>
+                        <td>${row.user_int ?? '-'}</td>
+                        <td>${row.mcp ?? '-'}</td>
+                    </tr>
+                `).join('');
+            }
+
+            function updateSortIcons(activeHeader, desc) {
+                headers.forEach(h => {
+                    h.querySelector('.sort-icon').textContent = '';
+                });
+                activeHeader.querySelector('.sort-icon').textContent = desc ? '▼' : '▲';
+            }
+        });
+    </script>
+</body>
+
+</html>

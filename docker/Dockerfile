@@ -43,7 +43,11 @@ RUN mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools" && \
     mv /tmp/cmdline-tools/* "$ANDROID_SDK_ROOT/cmdline-tools/latest" && \
     rm -f cmdline-tools.zip && \
     yes | sdkmanager --licenses >/dev/null && \
-    sdkmanager "platform-tools" "emulator" "build-tools;34.0.0" "platforms;android-34" "system-images;android-34;google_apis;x86_64"
+    wget https://edgedl.me.gvt1.com/edgedl/android/repository/emulator-linux_x64-14214601.zip -O /tmp/emulator.zip && \
+    unzip /tmp/emulator.zip -d $ANDROID_SDK_ROOT/ && \
+    sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34" "system-images;android-34;google_apis;x86_64" && \
+    rm -rf $ANDROID_SDK_ROOT/emulator-2 2>/dev/null || true && \
+    rm /tmp/emulator.zip
 
 COPY pyproject.toml uv.lock /app/service/
 

@@ -1,0 +1,3 @@
+[submodule "resources/mastodon-android"]
+	path = resources/mastodon-android
+	url = https://github.com/patdooog/mastodon-android.git

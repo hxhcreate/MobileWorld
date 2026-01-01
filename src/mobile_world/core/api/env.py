@@ -446,6 +446,7 @@ def get_container_info(container_name: str) -> ContainerInfo | None:
     backend_port = None
     viewer_port = None
     vnc_port = None
+    adb_port = None
 
     ports = network.get("Ports", {})
     for container_port, host_bindings in ports.items():
@@ -459,6 +460,8 @@ def get_container_info(container_name: str) -> ContainerInfo | None:
                     viewer_port = host_port
                 elif container_port_num == "5800":
                     vnc_port = host_port
+                elif container_port_num == "5556":
+                    adb_port = host_port
             except (ValueError, IndexError):
                 pass
 
@@ -471,6 +474,7 @@ def get_container_info(container_name: str) -> ContainerInfo | None:
         backend_port=backend_port,
         viewer_port=viewer_port,
         vnc_port=vnc_port,
+        adb_port=adb_port,
     )
 
 

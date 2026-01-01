@@ -333,6 +333,7 @@ class ContainerInfo(BaseModel):
     backend_port: int | None = None
     viewer_port: int | None = None
     vnc_port: int | None = None
+    adb_port: int | None = None
 
 
 class ContainerConfig(BaseModel):

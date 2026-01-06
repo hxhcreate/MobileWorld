@@ -1,8 +1,7 @@
-<h1 align="center">MobileWorld</h1>
-
 <p align="center">
-  <strong>Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments</strong>
+  <img src="./assets/mw_title_v1.png" alt="Banner">
 </p>
+
 
 <p align="center">
   <a href="https://tongyi-mai.github.io/MobileWorld/">Website</a> •

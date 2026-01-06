@@ -311,14 +311,14 @@ def _generate_index_page(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📱 Mobile World Log Viewer - {_escape_html(title)}</title>
+    <title>📱 MobileWorld Log Viewer - {_escape_html(title)}</title>
     <style>{css}</style>
 </head>
 <body>
 <div class="container">
     <div class="app-header">
         <div class="app-title">
-            <h1>📱 Mobile World Log Viewer</h1>
+            <h1>📱 MobileWorld Log Viewer</h1>
             <div class="last-update">Log: {_escape_html(title)}</div>
         </div>
     </div>

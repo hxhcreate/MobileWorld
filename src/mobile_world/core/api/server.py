@@ -1,6 +1,6 @@
-"""Server management APIs for Mobile World.
+"""Server management APIs for MobileWorld.
 
-This module provides programmatic access to start and manage the Mobile World server.
+This module provides programmatic access to start and manage the MobileWorld server.
 """
 
 import logging
@@ -27,7 +27,7 @@ async def start_server(
     enable_mcp: bool = False,
     suppress_health_logs: bool = True,
 ) -> None:
-    """Start the Mobile World server.
+    """Start the MobileWorld server.
 
     Args:
         host: Server host address

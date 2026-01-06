@@ -1,4 +1,4 @@
-"""Docker utility helpers for Mobile World CLI.
+"""Docker utility helpers for MobileWorld CLI.
 
 This module centralizes common Docker operations (run, ps, inspect, exec, rm)
 and a consistent command runner with improved error messaging.

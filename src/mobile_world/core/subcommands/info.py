@@ -1,4 +1,4 @@
-"""Info subcommand for Mobile World CLI."""
+"""Info subcommand for MobileWorld CLI."""
 
 import argparse
 from pathlib import Path
@@ -543,7 +543,7 @@ async def execute(args: argparse.Namespace) -> None:
                 logger.exception("Error exporting to Excel")
                 raise
         else:
-            header_text = f"Mobile World Tasks - Suite: {suite_family}"
+            header_text = f"MobileWorld Tasks - Suite: {suite_family}"
             header = Text(header_text, style="bold magenta")
             console.print(Panel(header, border_style="magenta"))
             console.print()
@@ -557,14 +557,14 @@ async def execute(args: argparse.Namespace) -> None:
             )
 
     elif args.info_command == "agent":
-        header = Text("Mobile World Agents", style="bold magenta")
+        header = Text("MobileWorld Agents", style="bold magenta")
         console.print(Panel(header, border_style="magenta"))
         console.print()
 
         display_agents_info(console, name_filter=args.filter if hasattr(args, "filter") else None)
 
     elif args.info_command == "app":
-        header_text = f"Mobile World Apps - Suite: {suite_family}"
+        header_text = f"MobileWorld Apps - Suite: {suite_family}"
         header = Text(header_text, style="bold magenta")
         console.print(Panel(header, border_style="magenta"))
         console.print()
@@ -577,7 +577,7 @@ async def execute(args: argparse.Namespace) -> None:
         )
 
     elif args.info_command == "mcp":
-        header = Text("Mobile World MCP Tools", style="bold magenta")
+        header = Text("MobileWorld MCP Tools", style="bold magenta")
         console.print(Panel(header, border_style="magenta"))
         console.print()
 

@@ -1,4 +1,4 @@
-"""Subcommands for the Mobile World CLI."""
+"""Subcommands for the MobileWorld CLI."""
 
 from .device import configure_parser as configure_device_parser
 from .device import execute as execute_device

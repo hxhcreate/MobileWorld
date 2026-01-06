@@ -1,4 +1,4 @@
-"""Mobile World core module.
+"""MobileWorld core module.
 
 This module exposes the public APIs for programmatic use.
 

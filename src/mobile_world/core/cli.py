@@ -1,5 +1,5 @@
 """
-Command-line interface for Mobile World framework.
+Command-line interface for MobileWorld framework.
 """
 
 import argparse

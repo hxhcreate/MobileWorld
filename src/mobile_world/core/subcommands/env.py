@@ -1,4 +1,4 @@
-"""Environment subcommand for Mobile World CLI - Docker container management."""
+"""Environment subcommand for MobileWorld CLI - Docker container management."""
 
 import argparse
 import json
@@ -65,7 +65,7 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
     """Configure the env subcommand parser."""
     env_parser = subparsers.add_parser(
         "env",
-        help="Manage Docker environments for Mobile World",
+        help="Manage Docker environments for MobileWorld",
     )
 
     # Global verbosity flags for CLI UX
@@ -205,7 +205,7 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
     list_parser = env_subparsers.add_parser(
         "list",
         aliases=["ls"],
-        help="List running Mobile World containers",
+        help="List running MobileWorld containers",
     )
     list_parser.add_argument(
         "--all",
@@ -239,7 +239,7 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
     # Restart subcommand
     restart_parser = env_subparsers.add_parser(
         "restart",
-        help="Restart the Mobile World server in a container",
+        help="Restart the MobileWorld server in a container",
     )
     restart_parser.add_argument(
         "container_name",
@@ -276,7 +276,7 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
     # Check subcommand
     env_subparsers.add_parser(
         "check",
-        help="Check prerequisites for running Mobile World (Docker, KVM)",
+        help="Check prerequisites for running MobileWorld (Docker, KVM)",
     )
 
 
@@ -713,7 +713,7 @@ def _destroy_containers(args: argparse.Namespace) -> None:
 
 
 def _list_containers(args: argparse.Namespace) -> None:
-    """List Mobile World containers."""
+    """List MobileWorld containers."""
     containers = list_containers(
         image_filter=args.image,
         name_prefix=args.name_prefix,
@@ -723,7 +723,7 @@ def _list_containers(args: argparse.Namespace) -> None:
     if not containers:
         console.print(
             Panel(
-                "[yellow]No Mobile World containers found[/yellow]",
+                "[yellow]No MobileWorld containers found[/yellow]",
                 title="[yellow]ℹ Info[/yellow]",
                 border_style="yellow",
             )
@@ -754,7 +754,7 @@ def _list_containers(args: argparse.Namespace) -> None:
         console.print()
 
         table = Table(
-            title="Mobile World Containers",
+            title="MobileWorld Containers",
             show_header=True,
             header_style="bold magenta",
         )
@@ -852,10 +852,10 @@ def _info_container(args: argparse.Namespace) -> None:
 
 
 def _restart_single_container(container_name: str, interactive: bool = False) -> bool:
-    """Restart the Mobile World server in a single container."""
+    """Restart the MobileWorld server in a single container."""
     console.print(
         Panel(
-            f"[cyan]Killing Mobile World server in container '{container_name}'...[/cyan]",
+            f"[cyan]Killing MobileWorld server in container '{container_name}'...[/cyan]",
             title="[bold cyan]🔄 Killing Server[/bold cyan]",
             border_style="cyan",
         )
@@ -865,7 +865,7 @@ def _restart_single_container(container_name: str, interactive: bool = False) ->
 
     console.print(
         Panel(
-            f"[cyan]Restarting Mobile World server in container '{container_name}'...[/cyan]",
+            f"[cyan]Restarting MobileWorld server in container '{container_name}'...[/cyan]",
             title="[bold cyan]🔄 Restarting Server[/bold cyan]",
             border_style="cyan",
         )
@@ -916,7 +916,7 @@ def _restart_single_container(container_name: str, interactive: bool = False) ->
 
 
 def _restart_server(args: argparse.Namespace) -> None:
-    """Restart the Mobile World server in container(s)."""
+    """Restart the MobileWorld server in container(s)."""
     if args.container_name:
         container_name = resolve_container_name(args.container_name, args.name_prefix)
         success = _restart_single_container(container_name, interactive=args.interactive)
@@ -991,12 +991,12 @@ def _exec_container(args: argparse.Namespace) -> None:
 
 
 def _check_prerequisites(args: argparse.Namespace) -> None:
-    """Check prerequisites for running Mobile World."""
+    """Check prerequisites for running MobileWorld."""
     _ = args  # unused
 
     console.print(
         Panel(
-            "[cyan]Checking prerequisites for Mobile World...[/cyan]",
+            "[cyan]Checking prerequisites for MobileWorld...[/cyan]",
             title="[bold cyan]🔍 Prerequisite Check[/bold cyan]",
             border_style="cyan",
         )
@@ -1041,7 +1041,7 @@ def _check_prerequisites(args: argparse.Namespace) -> None:
         console.print(
             Panel(
                 f"[green]✓ All {results.passed_count} checks passed![/green]\n"
-                "[cyan]Environment is ready for Mobile World.[/cyan]",
+                "[cyan]Environment is ready for MobileWorld.[/cyan]",
                 title="[bold green]✓ Ready[/bold green]",
                 border_style="green",
             )

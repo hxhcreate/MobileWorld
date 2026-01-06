@@ -1,4 +1,4 @@
-"""Public APIs for Mobile World core functionality.
+"""Public APIs for MobileWorld core functionality.
 
 This module exposes programmatic APIs for:
 - Task, agent, app, and MCP tool information retrieval

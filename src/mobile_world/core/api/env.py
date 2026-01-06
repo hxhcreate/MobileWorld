@@ -1,7 +1,7 @@
-"""Environment (Docker container) management APIs for Mobile World.
+"""Environment (Docker container) management APIs for MobileWorld.
 
 This module provides programmatic access to Docker container management
-for running Mobile World environments.
+for running MobileWorld environments.
 """
 
 import json
@@ -372,7 +372,7 @@ def list_containers(
     name_prefix: str | None = DEFAULT_NAME_PREFIX,
     include_all: bool = False,
 ) -> list[ContainerInfo]:
-    """List Mobile World containers.
+    """List MobileWorld containers.
 
     Args:
         image_filter: Filter by image name
@@ -533,7 +533,7 @@ def remove_containers(
 
 
 def kill_server_in_container(container_name: str) -> bool:
-    """Kill the Mobile World server in a container.
+    """Kill the MobileWorld server in a container.
 
     Args:
         container_name: Name of the container
@@ -560,7 +560,7 @@ def restart_server_in_container(
     detach: bool = True,
     enable_mcp: bool = True,
 ) -> bool:
-    """Restart the Mobile World server in a container.
+    """Restart the MobileWorld server in a container.
 
     Args:
         container_name: Name of the container
@@ -737,7 +737,7 @@ def check_kvm_available() -> PrerequisiteCheckResult:
 
 
 def check_prerequisites() -> PrerequisiteCheckResults:
-    """Run all prerequisite checks for Mobile World environment.
+    """Run all prerequisite checks for MobileWorld environment.
 
     Returns:
         PrerequisiteCheckResults with all check results

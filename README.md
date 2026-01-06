@@ -1,8 +1,7 @@
-<h1 align="center">Mobile World</h1>
-
 <p align="center">
-  <strong>Benchmarking Autonomous Mobile Agents in Agent-User Interactive, and MCP-Augmented Environments</strong>
+  <img src="./assets/mw_title_v1.png" alt="Banner">
 </p>
+
 
 <p align="center">
   <a href="https://tongyi-mai.github.io/MobileWorld/">Website</a> •
@@ -27,22 +26,27 @@
 
 </p>
 
-**Mobile World** is a challenging mobile-use benchmark designed to reflect real-world scenarios. It comprises **201 tasks** across **20 applications**, featuring long-horizon, cross-app tasks, and novel task categories including agent–user interaction and MCP-augmented tasks.
 
+While maintaining the same level of rigorous, reproducible evaluation as AndroidWorld, **MobileWorld** offers a more challenging online mobile-use benchmark by introducing four additional features that better capture real-world agent behavior.
 
-
-## ✨ Key Features
-
-- 🎯 **201 Diverse Tasks**: Comprehensive benchmark spanning 20 real-world mobile applications
+- 🎯 **Broad Real-World Coverage**: 201 carefully curated tasks across 20 mobile applications
 - 🔄 **Long-Horizon Tasks**: Multi-step reasoning and cross-app workflows
 - 👥 **Agent-User Interaction**: Novel tasks requiring dynamic human-agent collaboration
-- 🔧 **MCP-Augmented Tasks**: Leverage Model Context Protocol for external tool integration
-- 🐳 **Docker-Based**: Easy deployment with containerized Android environments
-- ⚡ **Parallel Evaluation**: Scale evaluation across multiple containers for faster results
-- 📊 **Rich Visualization**: Interactive web-based trajectory viewer and analysis tools
+- 🔧 **MCP-Augmented Tasks**: Support for Model Context Protocol (MCP) to evaluate hybrid tool-use capabilities
+
+<p align="center">
+  <img src="./assets/compare_to_aw.jpg" alt="Comparison to AndroidWorld" width="800">
+  <br>
+  <em>Difficulty comparison between MobileWorld and AndroidWorld</em>
+</p>
+
+## 📢 Updates
+- **2026-12-29**: We released [MAI-UI](https://tongyi-mai.github.io/MAI-UI/)🔥, achieving SOTA performance with a 41.7% success rate in the end-to-end models category on the MobileWorld benchmark.
+- **2025-12-23**: Initial release of MobileWorld benchmark. Check out our [paper](https://arxiv.org/abs/2512.19432) and [website](https://tongyi-mai.github.io/MobileWorld/)🔥.
+- **2025-12-23**: Docker image `ghcr.io/Tongyi-MAI/mobile_world:latest` available for public use.
+
 
 ## 📋 Table of Contents
-- [Key Features](#-key-features)
 - [Updates](#-updates)
 - [Overview](#-overview)
 - [Installation](#-installation)
@@ -50,27 +54,20 @@
 - [Available Commands](#-available-commands)
 - [Documentation](#-documentation)
 - [Benchmark Statistics](#-benchmark-statistics)
-- [Contributors](#-open-source-contributors)
+- [Contact](#-contact)
 - [Acknowledgements](#-acknowledgements)
 - [Citation](#-citation)
-- [Contact](#-contact)
 
----
-
-## 📢 Updates
-- **2026-12-29**: We release [MAI-UI](https://tongyi-mai.github.io/MAI-UI/), achieving top-performance (41.7%) on Mobile World benchmark.
-- **2025-12-23**: Docker image `ghcr.io/Tongyi-MAI/mobile_world:latest` available for public use!
-- **2025-12-23**: Initial release of Mobile World benchmark. Check out our [paper](https://arxiv.org/abs/2512.19432) and [website](https://tongyi-mai.github.io/MobileWorld/)!
 
 ---
 
 ## 📖 Overview
 
 <p align="center">
-  <img src="./assets/mw_overview.jpg" alt="Mobile World Overview" width="800">
+  <img src="./assets/mw_overview.jpg" alt="MobileWorld Overview" width="800">
 </p>
 
-Mobile World is a comprehensive benchmark for evaluating autonomous mobile agents in realistic scenarios. Our benchmark features a robust infrastructure and deterministic evaluation methodology:
+MobileWorld is a comprehensive benchmark for evaluating autonomous mobile agents in realistic scenarios. Our benchmark features a robust infrastructure and deterministic evaluation methodology:
 
 ### 🏗️ System Architecture
 
@@ -206,13 +203,13 @@ Opens an interactive web-based visualization at `http://localhost:8760` to explo
 
 ## 🔧 Available Commands
 
-Mobile World provides a comprehensive CLI (`mw` or `mobile-world`) with the following commands:
+MobileWorld provides a comprehensive CLI (`mw` or `mobile-world`) with the following commands:
 
 | Command | Description |
 |---------|-------------|
 | `mw env check` | Check prerequisites (Docker, KVM) and pull latest image |
 | `mw env run` | Launch Docker container(s) with Android emulators |
-| `mw env list` | List running Mobile World containers |
+| `mw env list` | List running MobileWorld containers |
 | `mw env rm` | Remove/destroy containers |
 | `mw env info` | Get detailed info about a container |
 | `mw env restart` | Restart the server in a container |
@@ -248,11 +245,14 @@ For detailed documentation, see the `docs/` directory:
 
 ## 🎯 Benchmark Statistics
 
-<p align="center">
-  <img src="./assets/mw_statistics.jpg" alt="Mobile World Statistics" width="350">
-</p>
+<table align="center">
+  <tr>
+    <td><img src="./assets/scenario_distribution.jpg" alt="Scenario Distribution" width="420"></td>
+    <td><img src="./assets/mw_statistics.jpg" alt="MobileWorld Statistics" width="380"></td>
+  </tr>
+</table>
 
-Mobile World comprises **201 tasks** spanning diverse complexity levels and evaluation methodologies:
+MobileWorld comprises **201 tasks** spanning diverse complexity levels and evaluation methodologies:
 
 ### Task Categories
 
@@ -279,27 +279,34 @@ Our deterministic evaluation employs four complementary verification approaches:
 - **5 MCP Servers** for external tool integration
 - **64 MCP Tools** enabling extended agent capabilities
 
----
 
-## 👥 Open Source Contributors
 
-Thanks to all the contributors!
+## 📬 Contact
+
+For questions, issues, or collaboration inquiries:
+
+- **GitHub Issues**: [Open an issue](https://github.com/Tongyi-MAI/MobileWorld/issues)
+- **Email**: Contact the maintainers
+- **WeChat Group**: Scan to join our discussion group
+
+<p align="center">
+  <img src="site/assets/wechat_qr.png" alt="WeChat Group QR Code" width="200">
+</p>
+
+
+## Acknowledgements
+
+We thank [Android World](https://github.com/google-research/android_world) and [Android-Lab](https://github.com/THUDM/Android-Lab) for their open source contributions.
+We also thank all the open-source contributors!
 
 <a href="https://github.com/Tongyi-MAI/MobileWorld/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Tongyi-MAI/MobileWorld" />
 </a>
 
----
 
-## 🙏 Acknowledgements
+## Citation
 
-We thank [Android World](https://github.com/google-research/android_world) and [Android-Lab](https://github.com/THUDM/Android-Lab) for their open source contributions.
-
----
-
-## 📄 Citation
-
-If you find Mobile World useful in your research, please cite our paper:
+If you find MobileWorld useful in your research, please cite our paper:
 
 ```bibtex
 @misc{kong2025mobileworldbenchmarkingautonomousmobile,
@@ -315,30 +322,8 @@ If you find Mobile World useful in your research, please cite our paper:
 
 ---
 
-## 📬 Contact
-
-For questions, issues, or collaboration inquiries:
-
-- **GitHub Issues**: [Open an issue](https://github.com/Tongyi-MAI/MobileWorld/issues)
-- **Email**: Contact the maintainers
-- **WeChat Group**: Scan to join our discussion group
-
-<p align="center">
-  <img src="site/assets/wechat_qr.png" alt="WeChat Group QR Code" width="200">
-</p>
-
----
-
-## 💡 You might also be interested
-
-- **MAI-UI**: Top-performing agent (41.7%) on Mobile World benchmark. [Website](https://tongyi-mai.github.io/MAI-UI/)
-- **Android World**: Open-ended tasks in real Android environments. [GitHub](https://github.com/google-research/android_world)
-- **Android-Lab**: Mobile agent benchmark and platform. [GitHub](https://github.com/THUDM/Android-Lab)
-
----
-
 ## ⭐ Star History
 
-If you find Mobile World helpful, please consider giving us a star ⭐!
+If you find MobileWorld helpful, please consider giving us a star ⭐!
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Tongyi-MAI/MobileWorld&type=Date)](https://star-history.com/#Tongyi-MAI/MobileWorld&Date)

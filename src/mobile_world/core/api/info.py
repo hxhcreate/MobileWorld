@@ -1,4 +1,4 @@
-"""Information retrieval APIs for Mobile World.
+"""Information retrieval APIs for MobileWorld.
 
 This module provides programmatic access to task, agent, app, and MCP tool information.
 """

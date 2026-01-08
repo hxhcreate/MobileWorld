@@ -1,4 +1,4 @@
-"""Device subcommand for Mobile World CLI - Live Android device screen viewer."""
+"""Device subcommand for MobileWorld CLI - Live Android device screen viewer."""
 
 import argparse
 import sys

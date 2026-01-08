@@ -105,10 +105,10 @@ def _install_adb_keyboard(device: str = "emulator-5554") -> bool:
 
 
 def _start_server_background(port: int = 6800, suite_family: str = "mobile_world") -> str | None:
-    """Start the Mobile World server in the background."""
+    """Start the MobileWorld server in the background."""
     global _server_process
 
-    _console.print(f"[cyan]Starting Mobile World server on port {port}...[/cyan]")
+    _console.print(f"[cyan]Starting MobileWorld server on port {port}...[/cyan]")
 
     try:
         _server_process = subprocess.Popen(
@@ -235,7 +235,7 @@ def env_validation(aw_url: str | None, device: str = "emulator-5554") -> str:
         if server_url is None:
             _console.print(
                 Panel(
-                    "[bold red]Failed to start Mobile World server![/bold red]\n\n"
+                    "[bold red]Failed to start MobileWorld server![/bold red]\n\n"
                     "[yellow]You can start the server manually:[/yellow]\n\n"
                     "   [cyan]mobile-world server --port 6800[/cyan]\n\n"
                     "Or run inside Docker container:\n\n"
@@ -317,7 +317,7 @@ def env_cleanup(device: str = "emulator-5554"):
             pass
 
     if _server_process is not None:
-        _console.print("[cyan]Stopping Mobile World server...[/cyan]")
+        _console.print("[cyan]Stopping MobileWorld server...[/cyan]")
         try:
             _server_process.terminate()
             _server_process.wait(timeout=5)

@@ -1,4 +1,4 @@
-"""Server subcommand for Mobile World CLI."""
+"""Server subcommand for MobileWorld CLI."""
 
 import argparse
 

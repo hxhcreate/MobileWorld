@@ -1,4 +1,4 @@
-"""Eval subcommand for Mobile World CLI - Run benchmark evaluation suite."""
+"""Eval subcommand for MobileWorld CLI - Run benchmark evaluation suite."""
 
 import argparse
 import json

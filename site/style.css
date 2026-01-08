@@ -1,5 +1,5 @@
 /* ============================================
-   Mobile World - Enhanced Styles
+   MobileWorld - Enhanced Styles
    Inspired by OSWorld Design
    ============================================ */
 
@@ -15,8 +15,9 @@
     --gold-color: #ffd700;
 }
 
-html {
-    scroll-behavior: smooth;
+/* Override Bulma's max-width for wider screens */
+.container.is-max-desktop {
+    max-width: 1400px;
 }
 
 body {
@@ -26,8 +27,18 @@ body {
 }
 
 /* Navbar Customization */
-.navbar {
+.navbar.is-fixed-top {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+html {
+    padding-top: 3.25rem;
+    scroll-behavior: smooth;
+}
+
+.navbar-title {
+    font-size: 1.1rem;
 }
 
 .navbar-item {
@@ -40,11 +51,52 @@ body {
     color: var(--primary-color);
 }
 
+.navbar-end .buttons {
+    gap: 0.5rem;
+}
+
+.navbar-end .button {
+    font-weight: 500;
+    font-size: 0.85rem !important;
+}
+
+/* Cite dropdown */
+.cite-dropdown-content {
+    padding: 1rem;
+    min-width: 500px;
+}
+
+.cite-bibtex {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.cite-bibtex code {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.75rem;
+    background: none;
+}
+
+#cite-dropdown .dropdown-menu {
+    padding-top: 0;
+}
+
+#cite-dropdown .dropdown-content {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background: #fff;
-    padding: 3rem 1.5rem;
+    padding: 0rem 1.5rem;
 }
 
 .publication-title {
@@ -57,7 +109,7 @@ body {
 
 .publication-authors {
     line-height: 1.8;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 .author-block {
@@ -82,7 +134,6 @@ body {
 }
 
 .publication-links {
-    margin-top: 1.5rem;
 }
 
 .publication-links .button {
@@ -98,7 +149,7 @@ body {
 
 /* Banner */
 .banner {
-    width: 100%;
+    width: 80%;
     max-width: 927px;
     margin: 0 auto;
     overflow: hidden;
@@ -107,16 +158,17 @@ body {
     background: #0f0f0f;
 }
 
-.banner img {
+.banner img,
+.banner video {
     width: 100%;
     height: auto;
     display: block;
 }
 
 /* Sections */
-.section {
+/* .section {
     padding: 3rem 1.5rem;
-}
+} */
 
 .title.is-3 {
     font-family: 'Noto Serif', Georgia, serif;
@@ -136,12 +188,17 @@ body {
     background: #fafafa;
     border: 1px solid var(--border-color);
     margin-bottom: 2rem;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
+}
+
+.leaderboard-filters .columns {
+    align-items: flex-end;
 }
 
 .leaderboard-filters .label {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
 }
 
 .osworld-table-container {
@@ -153,6 +210,7 @@ body {
 
 .osworld-leaderboard-table {
     margin-bottom: 0 !important;
+    font-size: 1.05rem;
 }
 
 .osworld-leaderboard-table thead {
@@ -164,7 +222,7 @@ body {
     border-color: var(--border-color) !important;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     letter-spacing: 0.5px;
     padding: 1rem 0.75rem;
     border-bottom: 2px solid var(--border-color) !important;
@@ -180,7 +238,7 @@ body {
 }
 
 .osworld-leaderboard-table tbody td {
-    vertical-align: top;
+    vertical-align: middle;
     padding: 1.25rem 0.75rem;
 }
 
@@ -215,18 +273,91 @@ body {
     background-color: rgba(255, 215, 0, 0.12) !important;
 }
 
+/* Sortable header */
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.sortable-header:hover {
+    background-color: #eaeaea;
+}
+
+.sort-icon {
+    margin-left: 0.4rem;
+    color: #999 !important;
+    font-size: 0.7rem;
+}
+
+.sort-icon.active {
+    color: #28a745;
+}
+
 /* Model cell */
 .model-cell {
-    line-height: 1.6;
+    line-height: 1.5;
+}
+
+.model-cell .model-name {
+    font-size: 1.1rem;
+    color: #111;
+    margin-bottom: 0.25rem;
+}
+
+.model-cell .model-org {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+}
+
+.model-cell .model-date {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.model-cell .model-date i {
+    margin-right: 0.3rem;
+}
+
+/* Category badge styles */
+.category-badge {
+    display: inline-block;
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    font-size: 1rem !important;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid;
+}
+
+.category-badge.agentic {
+    background: #f0f7ff;
+    color: #1a5a96;
+    border-color: #c8ddf5;
+}
+
+.category-badge.end-to-end {
+    background: #fff7ed;
+    color: #9a5b1c;
+    border-color: #f5dcc8;
+}
+
+/* Legacy category text style (fallback) */
+.category-text {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Overall score */
+.overall-score {
+    color: #28a745 !important;
+    font-size: 1.2rem;
 }
 
 .model-name-line {
     margin-bottom: 0.4rem;
-}
-
-.model-name {
-    font-size: 1rem;
-    color: #111;
 }
 
 .model-org-line {
@@ -252,7 +383,7 @@ body {
 .model-link {
     color: var(--primary-color);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 1rem;
     border-bottom: 1px dotted var(--primary-color);
     transition: all 0.2s;
 }
@@ -301,11 +432,6 @@ body {
     border-radius: 3px;
     font-weight: 600;
     font-size: 0.85rem;
-}
-
-.overall-score {
-    background: var(--primary-color);
-    color: white;
 }
 
 /* Success rate cell */
@@ -430,12 +556,11 @@ body {
 .code-block pre {
     margin: 0;
     padding: 0.75rem 1rem;
-    padding-top: 2.25rem;
     background: #f6f8fa;
     border: 1px solid #e1e4e8;
     border-radius: 4px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: 0.5rem;
 }
 
 .code-block code {
@@ -468,7 +593,9 @@ p code {
 
 /* Images & Figures */
 figure.image {
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
+    width: 70%;
+    left: 15%;
 }
 
 figure.image img {
@@ -503,7 +630,7 @@ figcaption {
 
 /* Tables - General Enhancement */
 .table {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
 }
 
 .table th {
@@ -512,11 +639,12 @@ figcaption {
 
 .table-container {
     overflow-x: auto;
-    margin: 1.5rem 0;
+    margin: 1.2rem 0;
 }
 
 /* Tags Enhancement */
 .tag {
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.3px;
 }
@@ -531,20 +659,6 @@ a:hover {
     color: var(--primary-color);
 }
 
-/* Academicons for arxiv icon */
-@font-face {
-    font-family: 'Academicons';
-    src: url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.ttf') format('truetype');
-}
-
-.ai {
-    font-family: 'Academicons';
-    font-style: normal;
-}
-
-.ai-arxiv:before {
-    content: "\e802";
-}
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
@@ -570,7 +684,7 @@ a:hover {
 
     .osworld-leaderboard-table thead th {
         padding: 0.75rem 0.5rem;
-        font-size: 0.7rem;
+        font-size: 0.9rem;
     }
 
     .osworld-leaderboard-table tbody td {
@@ -621,6 +735,8 @@ a:hover {
 }
 
 .section {
+    padding: 0rem 5rem;
+    padding-bottom: 1rem;
     animation: fadeIn 0.6s ease-out;
 }
 

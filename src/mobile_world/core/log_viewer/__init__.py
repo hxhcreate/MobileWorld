@@ -1,4 +1,4 @@
-"""Log viewer module for Mobile World trajectories.
+"""Log viewer module for MobileWorld trajectories.
 
 This module provides a web-based viewer for trajectory logs using FastHTML.
 """

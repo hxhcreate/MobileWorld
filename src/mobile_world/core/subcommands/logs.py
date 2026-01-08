@@ -1,4 +1,4 @@
-"""Logs subcommand for Mobile World CLI - Work with trajectory logs."""
+"""Logs subcommand for MobileWorld CLI - Work with trajectory logs."""
 
 import argparse
 import os
@@ -137,7 +137,7 @@ async def execute(args: argparse.Namespace) -> None:
 async def _execute_view(args: argparse.Namespace) -> None:
     """Execute the logs view command."""
     try:
-        print("🚀 Starting Mobile World Log Viewer...")
+        print("🚀 Starting MobileWorld Log Viewer...")
         print(f"📂 Log Root: {args.log_dir}")
         print(f"🌐 Opening web interface on port {args.port}...")
 

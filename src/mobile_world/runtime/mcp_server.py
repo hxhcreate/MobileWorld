@@ -1,4 +1,4 @@
-"""MCP server for Mobile World controller operations."""
+"""MCP server for MobileWorld controller operations."""
 
 import asyncio
 import concurrent.futures

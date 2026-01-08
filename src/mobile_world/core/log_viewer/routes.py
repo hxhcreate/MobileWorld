@@ -831,13 +831,13 @@ def register_routes(rt):
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")
 
         return (
-            # Titled("Mobile World Log Viewer"),
+            # Titled("MobileWorld Log Viewer"),
             Style(DARK_THEME_CSS),
             Div(
                 # Header
                 Div(
                     Div(
-                        H1("📱 Mobile World Log Viewer"),
+                        H1("📱 MobileWorld Log Viewer"),
                         Div(
                             f"Last Updated: {current_time}",
                             cls="last-update",

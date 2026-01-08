@@ -1,4 +1,4 @@
-"""Test subcommand for Mobile World CLI - Run a single ad-hoc task for testing."""
+"""Test subcommand for MobileWorld CLI - Run a single ad-hoc task for testing."""
 
 import argparse
 import os

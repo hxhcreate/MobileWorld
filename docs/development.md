@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide covers development workflows for Mobile World, including debugging and testing within Docker containers.
+This guide covers development workflows for MobileWorld, including debugging and testing within Docker containers.
 
 ## Dev Mode
 
@@ -122,7 +122,7 @@ mobile-world env rm --all
 
 ## Server Architecture
 
-The Mobile World server is launched in the container via the entrypoint script:
+The MobileWorld server is launched in the container via the entrypoint script:
 
 ```bash
 uv run mobile-world server --port 6800 &

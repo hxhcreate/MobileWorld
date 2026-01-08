@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile World: Benchmarking Autonomous Mobile Agents</title>
-    <meta name="description" content="Mobile World: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments">
+    <title>MobileWorld: Benchmarking Autonomous Mobile Agents</title>
+    <meta name="description" content="MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments">
     <meta name="keywords" content="Mobile Agent, GUI Agent, Android, Benchmark, MCP">
     
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Academicons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,8 +27,11 @@
 
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
+            <a class="navbar-item navbar-title" href="#">
+                <strong>MobileWorld</strong>
+            </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" id="navbar-burger">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -34,12 +39,55 @@
             </a>
         </div>
         <div class="navbar-menu" id="navbar-menu">
-            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-                <a class="navbar-item" href="#">Home</a>
+            <div class="navbar-start">
                 <a class="navbar-item" href="#leaderboard">Leaderboard</a>
                 <a class="navbar-item" href="#overview">Overview</a>
-                <a class="navbar-item" href="#getting-started">Getting Started</a>
-                <a class="navbar-item" href="#citation">Citation</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a href="https://arxiv.org/abs/2512.19432" class="button is-small is-dark" target="_blank">
+                            <span class="icon"><i class="ai ai-arxiv"></i></span>
+                            <span>Paper</span>
+                        </a>
+                        <a href="https://huggingface.co/datasets/Tongyi-MAI/MobileWorld" class="button is-small is-dark" target="_blank">
+                            <span class="icon"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HF" style="height: 16px;"></span>
+                            <span>Dataset</span>
+                        </a>
+                        <a href="https://github.com/Tongyi-MAI/MobileWorld" class="button is-small is-dark" target="_blank">
+                            <span class="icon"><i class="fab fa-github"></i></span>
+                            <span>Code</span>
+                        </a>
+                        <div class="dropdown is-hoverable is-right" id="cite-dropdown">
+                            <div class="dropdown-trigger">
+                                <button class="button is-small is-dark" aria-haspopup="true" aria-controls="cite-menu">
+                                    <span class="icon"><i class="fas fa-quote-right"></i></span>
+                                    <span>Cite</span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="cite-menu" role="menu">
+                                <div class="dropdown-content cite-dropdown-content">
+                                    <div class="dropdown-item">
+                                        <p class="is-size-7 has-text-weight-semibold mb-2">BibTeX</p>
+                                        <pre class="cite-bibtex"><code>@misc{kong2025mobileworldbenchmarkingautonomousmobile,
+      title={MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive, and MCP-Augmented Environments}, 
+      author={Quyu Kong and Xu Zhang and Zhenyu Yang and Nolan Gao and Chen Liu and Panrong Tong and Chenglin Cai and Hanzhang Zhou and Jianan Zhang and Liangyu Chen and Zhidan Liu and Steven Hoi and Yue Wang},
+      year={2025},
+      eprint={2512.19432},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2512.19432}, 
+}</code></pre>
+                                        <button class="button is-small is-fullwidth mt-2" id="copy-cite-btn">
+                                            <span class="icon"><i class="fas fa-copy"></i></span>
+                                            <span>Copy to Clipboard</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -50,27 +98,27 @@
             <div class="container is-max-desktop">
                 <div class="columns is-centered">
                     <div class="column has-text-centered">
-                        <h1 class="title is-1 publication-title">
-                            Mobile World: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments
+                        <h1 class="title is-2 publication-title">
+                            MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments
                         </h1>
                         
                         <div class="is-size-5 publication-authors">
-                            <span class="author-block">Quyu Kong<sup>*,1</sup>,</span>
-                            <span class="author-block">Xu Zhang<sup>*,1</sup>,</span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?hl=en&user=0EXa6lkAAAAJ" target="_blank">Quyu Kong</a><sup>*,1</sup>,</span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?user=bqXdMMMAAAAJ&hl=en" target="_blank">Xu Zhang</a><sup>*,1</sup>,</span>
                             <span class="author-block">Zhenyu Yang<sup>2</sup>,</span>
                             <span class="author-block">Nolan Gao<sup>3</sup>,</span>
-                            <span class="author-block">Chen Liu<sup>1</sup>,</span>
+                            <span class="author-block"><a href="https://www.linkedin.com/in/chen-liu-6a8112262/" target="_blank">Chen Liu</a><sup>1</sup>,</span>
                             <span class="author-block">Panrong Tong<sup>1</sup>,</span>
                             <span class="author-block">Chenglin Cai<sup>1</sup>,</span>
-                            <span class="author-block">Hanzhang Zhou<sup>1</sup>,</span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?user=4VpiXesAAAAJ&hl=en" target="_blank">Hanzhang Zhou</a><sup>1</sup>,</span>
                             <span class="author-block">Jianan Zhang<sup>1</sup>,</span>
-                            <span class="author-block">Liangyu Chen<sup>1</sup>,</span>
-                            <span class="author-block">Zhidan Liu<sup>2</sup>,</span>
-                            <span class="author-block">Steven HOI<sup>1</sup>,</span>
-                            <span class="author-block">Yue Wang<sup>1,&#9993;</sup></span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?user=9UqxQBEAAAAJ&hl=en" target="_blank">Liangyu Chen</a><sup>1</sup>,</span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?hl=en&user=wCzfY2QAAAAJ" target="_blank">Zhidan Liu</a><sup>2</sup>,</span>
+                            <span class="author-block"><a href="https://scholar.google.com/citations?user=JoLjflYAAAAJ&hl=en" target="_blank">Steven HOI</a><sup>1</sup>,</span>
+                            <span class="author-block"><a href="https://yuewang-cuhk.github.io/" target="_blank">Yue Wang</a><sup>1,&#9993;</sup></span>
                         </div>
 
-                        <div class="is-size-5 publication-authors">
+                        <div class="is-size-6 publication-authors">
                             <span class="author-block"><sup>1</sup>Tongyi Lab, Alibaba Group</span>
                             <span class="author-block"><sup>2</sup>HKUST (GZ)</span>
                             <span class="author-block"><sup>3</sup>University of Florida</span>
@@ -79,69 +127,46 @@
                             <span class="author-block email-block"><sup>&#9993;</sup> yue.w@alibaba-inc.com</span>
                         </div>
 
-                        <div class="column has-text-centered">
-                            <div class="publication-links">
-                                <span class="link-block">
-                                    <a href="https://arxiv.org/abs/2512.19432" class="button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="ai ai-arxiv"></i></span>
-                                        <span>Paper</span>
-                                    </a>
-                                </span>
-                                <span class="link-block">
-                                    <a href="https://huggingface.co/datasets/Tongyi-MAI/MobileWorld" class="button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-database"></i></span>
-                                        <span>Huggingface</span>
-                                    </a>
-                                </span>
-                                <span class="link-block">
-                                    <a href="https://github.com/Tongyi-MAI/MobileWorld" class="button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fab fa-github"></i></span>
-                                        <span>Code</span>
-                                    </a>
-                                </span>
-                                <span class="link-block">
-                                    <a href="#citation" class="button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-quote-right"></i></span>
-                                        <span>Cite</span>
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="column is-full">
+                    <div class="banner">
+                        <video autoplay loop muted preload="auto" controls id="banner-video" poster="assets/banner_poster.jpg">
+                            <source src="assets/banner_animated.mp4" type="video/mp4">
+                        </video>
+                        <script>
+                            // Start playing as soon as enough data is buffered
+                            const video = document.getElementById('banner-video');
+                            video.addEventListener('canplay', () => video.play());
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
-    <!-- Banner Section -->
-    <section class="section">
-        <div class="container is-max-desktop">
-            <div class="column is-full">
-                <div class="banner">
-                    <img src="assets/banner_animated.gif" alt="Mobile World Agent Trajectories">
-                </div>
-            </div>
-        </div>
-    </section>
 
     <main class="container is-max-desktop">
         <!-- Leaderboard -->
         <section id="leaderboard" class="section">
             <h2 class="title is-3 has-text-centered">Leaderboard</h2>
             <div class="content has-text-justified">
-                <p>Success rate (%) on Mobile World. We report overall SR and breakdown by task category: GUI-Only tasks
-                    (116), agent-user interaction tasks (45), and MCP-augmented tasks (40).</p>
+                <p>Success rate (%) on MobileWorld. We report overall SR and breakdown by task category: GUI-Only tasks
+                    (116), agent-user interaction tasks (45), and MCP-augmented tasks (40). <strong>All results are evaluated with max steps = 50.</strong> Please <a href="mailto:kongquyu.kqy@alibaba-inc.com"><strong>contact us</strong></a> to submit your results.</p>
             </div>
 
             <!-- Filters -->
             <div class="box leaderboard-filters">
-                <p class="has-text-weight-semibold mb-3">Filters:</p>
-                <div class="columns is-mobile is-multiline is-variable is-3">
-                    <div class="column is-half-mobile is-one-third-tablet">
+                <div class="columns is-mobile is-multiline is-vcentered is-variable is-3">
+                    <!-- <div class="column is-narrow">
+                        <span class="has-text-weight-semibold">Filters:</span>
+                    </div> -->
+                    <div class="column is-narrow">
                         <div class="field">
                             <label class="label is-small">Model Type:</label>
                             <div class="control">
-                                <div class="select is-fullwidth">
+                                <div class="select">
                                     <select id="filter-model-type">
                                         <option value="all">All</option>
                                         <option value="Agentic Framework">Agentic Framework</option>
@@ -151,11 +176,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column is-half-mobile is-one-quarter-tablet">
+                    <!-- Max Steps filter hidden - currently all results use max steps = 50
+                    <div class="column is-narrow">
                         <div class="field">
                             <label class="label is-small">Max Steps:</label>
                             <div class="control">
-                                <div class="select is-fullwidth">
+                                <div class="select">
                                     <select id="filter-steps">
                                         <option value="all">All</option>
                                         <option value="50">50</option>
@@ -164,7 +190,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column is-full-mobile is-narrow-tablet">
+                    -->
+                    <div class="column is-narrow">
                         <div class="field">
                             <label class="label is-small">&nbsp;</label>
                             <div class="control">
@@ -172,19 +199,6 @@
                                     Clear Filters
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label is-small">Sort by:</label>
-                    <div class="control">
-                        <div class="select">
-                            <select id="sort-by">
-                                <option value="overall-desc">Score (Highest first)</option>
-                                <option value="overall-asc">Score (Lowest first)</option>
-                                <option value="date-desc">Date (Newest first)</option>
-                                <option value="date-asc">Date (Oldest first)</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -197,14 +211,20 @@
                         <tr>
                             <th style="width: 60px;">Rank</th>
                             <th style="width: 100px;">Category</th>
-                            <th style="width: 200px;">Model</th>
-                            <th style="width: 150px;">Organization</th>
-                            <th style="width: 110px;">Date</th>
-                            <th style="width: 80px;" class="has-text-centered">Max Steps</th>
-                            <th style="width: 80px;" class="has-text-centered">Overall</th>
-                            <th style="width: 80px;" class="has-text-centered">GUI-Only</th>
-                            <th style="width: 80px;" class="has-text-centered">User-Int.</th>
-                            <th style="width: 80px;" class="has-text-centered">MCP</th>
+                            <th style="width: 150px;">Model</th>
+                            <!-- <th style="width: 80px;" class="has-text-centered">Max Steps</th> -->
+                            <th style="width: 100px;" class="has-text-centered sortable-header" data-sort="overall">
+                                Overall <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th style="width: 100px;" class="has-text-centered sortable-header" data-sort="gui_only">
+                                GUI-Only <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th style="width: 100px;" class="has-text-centered sortable-header" data-sort="user_int">
+                                User Interaction <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th style="width: 100px;" class="has-text-centered sortable-header" data-sort="mcp">
+                                MCP-Augmented <i class="fas fa-sort sort-icon"></i>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="leaderboard-body">
@@ -219,18 +239,18 @@
             <h2 class="title is-3">Overview</h2>
 
             <div class="content has-text-justified">
-                <p><strong>Mobile World</strong> is a substantially more challenging mobile-use benchmark designed to better
+                <p><strong>MobileWorld</strong> is a substantially more challenging mobile-use benchmark designed to better
                     reflect real-world mobile usage. It comprises <strong>201 tasks</strong> across <strong>20
                         applications</strong>, featuring long-horizon, cross-app tasks, and novel task categories including
                     agent-user interaction and MCP-augmented tasks.</p>
 
-                <p>The difficulty of Mobile World is twofold:</p>
+                <p>The difficulty of MobileWorld is twofold:</p>
 
-                <p><strong>Long-horizon, cross-application tasks.</strong> Mobile World tasks require on average 27.8
+                <p><strong>Long-horizon, cross-application tasks.</strong> MobileWorld tasks require on average 27.8
                     completion steps, nearly twice as many as 14.3 steps required in AndroidWorld. Moreover, 62.2% of tasks
                     involve cross-application workflows compared to only 9.5% in AndroidWorld.</p>
 
-                <p><strong>Novel task categories.</strong> Mobile World extends beyond standard GUI manipulation by
+                <p><strong>Novel task categories.</strong> MobileWorld extends beyond standard GUI manipulation by
                     introducing (1) agent-user interaction tasks (22.4%) that evaluate an agent's ability to handle
                     ambiguous instructions through collaborative dialogue, and (2) MCP-augmented tasks (19.9%) that require
                     hybrid-usage of GUI navigation and external tool invocations via the Model Context Protocol.</p>
@@ -239,7 +259,7 @@
             <figure class="image mt-4">
                 <img src="assets/compare_to_aw.jpg" alt="Comparison with AndroidWorld">
                 <figcaption class="has-text-centered mt-2" style="font-size: 0.9rem; color: #666;">
-                    <strong>Figure:</strong> Comparison between AndroidWorld and MobileWorld. Mobile World features harder tasks
+                    <strong>Figure:</strong> Comparison between AndroidWorld and MobileWorld. MobileWorld features harder tasks
                     with more steps, more cross-app workflows, and achieves lower SOTA accuracy, demonstrating its increased
                     difficulty.
                 </figcaption>
@@ -248,9 +268,9 @@
 
         <!-- Benchmark Comparison -->
         <section class="section">
-            <h2 class="title is-3">Benchmark Comparison</h2>
+            <h2 class="title is-4">Benchmark Comparison</h2>
             <div class="content has-text-justified">
-                <p>Comparison of online Mobile GUI Agent Benchmarks. Mobile World uniquely enables deterministic evaluation
+                <p>Comparison of online Mobile GUI Agent Benchmarks. MobileWorld uniquely enables deterministic evaluation
                     even for applications requiring backends (e.g., messaging) by utilizing self-hosted environments. We
                     also introduce novel task paradigms: agent-user interaction and Model Context Protocol (MCP)
                     augmentation.</p>
@@ -364,7 +384,7 @@
 
         <!-- Task Examples -->
         <section class="section">
-            <h2 class="title is-3">Task Examples</h2>
+            <h2 class="title is-4">Task Examples</h2>
 
             <div class="content has-text-justified">
                 <p>Beyond traditional GUI-only tasks, MobileWorld includes <strong>agent-user interaction tasks</strong> and
@@ -392,10 +412,10 @@
 
         <!-- Data Statistics -->
         <section class="section">
-            <h2 class="title is-3">Data Statistics</h2>
+            <h2 class="title is-4">Data Statistics</h2>
 
             <div class="content has-text-justified">
-                <p>We summarize key statistics of Mobile World, highlighting four core dimensions:</p>
+                <p>We summarize key statistics of MobileWorld, highlighting four core dimensions:</p>
 
                 <div class="content">
                     <ol>
@@ -421,96 +441,20 @@
 
         <!-- System Architecture -->
         <section class="section">
-            <h2 class="title is-3">System Architecture</h2>
+            <h2 class="title is-4">System Architecture</h2>
 
-            <figure class="image">
-                <img src="assets/fig_system_architecture.png" alt="System Architecture of Mobile World">
-                <figcaption class="has-text-justified mt-3">
-                    The system architecture of Mobile World consists of two main components.
+            <div class="content has-text-justified">
+                <p>The system architecture of MobileWorld consists of two main components.
                     <strong>Left:</strong> the host machine is where GUI agents receive task instructions and optionally
                     interact with users for clarification, then choose between GUI actions or MCP tool calls to complete
                     tasks. <strong>Right:</strong> the docker environment contains an isolated Android ecosystem with
                     emulators, self-hosted app backends, and an evaluator that verifies task completion through text
-                    matching, backend database, local storage, and app callbacks.
-                </figcaption>
+                    matching, backend database, local storage, and app callbacks.</p>
+            </div>
+
+            <figure class="image">
+                <img src="assets/fig_system_architecture.png" alt="System Architecture of MobileWorld">
             </figure>
-        </section>
-
-        <!-- Getting Started -->
-        <section id="getting-started" class="section">
-            <h2 class="title is-3">Getting Started</h2>
-
-            <div class="content has-text-justified">
-                <p><strong>Requirements:</strong> Docker with privileged container support, KVM for Android emulator
-                    acceleration, Python 3.12+, Linux host system (Windows WSL2 + KVM also supported).</p>
-            </div>
-
-            <p class="has-text-weight-semibold mt-3 mb-2">Installation:</p>
-            <div class="code-block">
-                <button class="button is-small copy-btn" onclick="copyCode(this)">
-                    <span class="icon is-small"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
-                </button>
-                <pre><code class="language-bash">git clone https://github.com/Tongyi-MAI/MobileWorld.git
-cd MobileWorld
-uv sync</code></pre>
-            </div>
-
-            <p class="has-text-weight-semibold mt-3 mb-2">Check environment and pull Docker image:</p>
-            <div class="code-block">
-                <button class="button is-small copy-btn" onclick="copyCode(this)">
-                    <span class="icon is-small"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
-                </button>
-                <pre><code class="language-bash">sudo mw env check</code></pre>
-            </div>
-
-            <p class="has-text-weight-semibold mt-3 mb-2">Launch Docker containers:</p>
-            <div class="code-block">
-                <button class="button is-small copy-btn" onclick="copyCode(this)">
-                    <span class="icon is-small"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
-                </button>
-                <pre><code class="language-bash">sudo mw env run --count 5 --launch-interval 20</code></pre>
-            </div>
-
-            <p class="has-text-weight-semibold mt-3 mb-2">Run evaluation:</p>
-            <div class="code-block">
-                <button class="button is-small copy-btn" onclick="copyCode(this)">
-                    <span class="icon is-small"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
-                </button>
-                <pre><code class="language-bash">sudo mw eval \
-    --agent_type qwen3vl \
-    --task ALL \
-    --max_round 50 \
-    --model_name Qwen3-VL-235B-A22B \
-    --llm_base_url [openai_compatible_url] \
-    --enable_mcp</code></pre>
-            </div>
-        </section>
-
-        <!-- Citation -->
-        <section id="citation" class="section">
-            <h2 class="title is-3">Citation</h2>
-            <div class="content has-text-justified">
-                <p>If you find Mobile World useful in your research, please cite our paper:</p>
-            </div>
-            <div class="code-block">
-                <button class="button is-small copy-btn" onclick="copyCode(this)">
-                    <span class="icon is-small"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
-                </button>
-                <pre><code class="language-bibtex">@misc{kong2025mobileworldbenchmarkingautonomousmobile,
-      title={MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive, and MCP-Augmented Environments}, 
-      author={Quyu Kong and Xu Zhang and Zhenyu Yang and Nolan Gao and Chen Liu and Panrong Tong and Chenglin Cai and Hanzhang Zhou and Jianan Zhang and Liangyu Chen and Zhidan Liu and Steven Hoi and Yue Wang},
-      year={2025},
-      eprint={2512.19432},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2512.19432}, 
-}</code></pre>
-            </div>
         </section>
 
         <!-- Acknowledgements -->
@@ -526,7 +470,7 @@ uv sync</code></pre>
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
-                <strong>Mobile World Team</strong> &middot; 
+                <strong>MobileWorld Team</strong> &middot; 
                 <a href="https://github.com/Tongyi-MAI/MobileWorld">GitHub</a> &middot; 
                 <a href="https://github.com/Tongyi-MAI/MobileWorld/issues">Issues</a>
             </p>
@@ -564,16 +508,36 @@ uv sync</code></pre>
             });
         }
 
+        // Copy cite button
+        document.addEventListener('DOMContentLoaded', () => {
+            const copyCiteBtn = document.getElementById('copy-cite-btn');
+            if (copyCiteBtn) {
+                copyCiteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const bibtex = copyCiteBtn.closest('.dropdown-item').querySelector('code').textContent;
+                    navigator.clipboard.writeText(bibtex).then(() => {
+                        const originalHTML = copyCiteBtn.innerHTML;
+                        copyCiteBtn.innerHTML = '<span class="icon"><i class="fas fa-check"></i></span><span>Copied!</span>';
+                        copyCiteBtn.classList.add('is-success');
+                        setTimeout(() => {
+                            copyCiteBtn.innerHTML = originalHTML;
+                            copyCiteBtn.classList.remove('is-success');
+                        }, 2000);
+                    });
+                });
+            }
+        });
+
         // Leaderboard functionality
         document.addEventListener('DOMContentLoaded', async function () {
             const tbody = document.getElementById('leaderboard-body');
             const filterModelType = document.getElementById('filter-model-type');
-            const filterSteps = document.getElementById('filter-steps');
+            // const filterSteps = document.getElementById('filter-steps');  // Max Steps filter hidden
             const clearFiltersBtn = document.getElementById('clear-filters');
-            const sortBySelect = document.getElementById('sort-by');
             
             let leaderboardData = [];
             let filteredData = [];
+            let currentSort = { key: 'overall', dir: 'desc' };
 
             // Load data from JSON
             try {
@@ -583,26 +547,52 @@ uv sync</code></pre>
                 filteredData = [...leaderboardData];
                 renderTable();
             } catch (error) {
-                tbody.innerHTML = '<tr><td colspan="4" class="has-text-centered">Failed to load leaderboard data.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="has-text-centered">Failed to load leaderboard data.</td></tr>';
                 console.error('Error loading leaderboard:', error);
+            }
+
+            // Sortable header click handler
+            document.querySelectorAll('.sortable-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const sortKey = header.dataset.sort;
+                    if (currentSort.key === sortKey) {
+                        currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
+                    } else {
+                        currentSort.key = sortKey;
+                        currentSort.dir = 'desc';
+                    }
+                    updateSortIcons();
+                    renderTable();
+                });
+            });
+
+            function updateSortIcons() {
+                document.querySelectorAll('.sortable-header').forEach(header => {
+                    const icon = header.querySelector('.sort-icon');
+                    if (header.dataset.sort === currentSort.key) {
+                        icon.className = currentSort.dir === 'desc' ? 'fas fa-sort-down sort-icon active' : 'fas fa-sort-up sort-icon active';
+                    } else {
+                        icon.className = 'fas fa-sort sort-icon';
+                    }
+                });
             }
 
             // Filter handlers
             filterModelType.addEventListener('change', applyFilters);
-            filterSteps.addEventListener('change', applyFilters);
-            sortBySelect.addEventListener('change', applyFilters);
+            // filterSteps.addEventListener('change', applyFilters);  // Max Steps filter hidden
             clearFiltersBtn.addEventListener('click', () => {
                 filterModelType.value = 'all';
-                filterSteps.value = 'all';
-                sortBySelect.value = 'overall-desc';
+                // filterSteps.value = 'all';  // Max Steps filter hidden
+                currentSort = { key: 'overall', dir: 'desc' };
+                updateSortIcons();
                 applyFilters();
             });
 
             function applyFilters() {
                 filteredData = leaderboardData.filter(row => {
                     const modelTypeMatch = filterModelType.value === 'all' || row.model_type === filterModelType.value;
-                    const stepsMatch = filterSteps.value === 'all' || row.max_steps === parseInt(filterSteps.value);
-                    return modelTypeMatch && stepsMatch;
+                    // const stepsMatch = filterSteps.value === 'all' || row.max_steps === parseInt(filterSteps.value);  // Max Steps filter hidden
+                    return modelTypeMatch;  // && stepsMatch
                 });
                 renderTable();
             }
@@ -615,17 +605,17 @@ uv sync</code></pre>
 
             function renderTable() {
                 // Sort data
-                const [sortKey, sortDir] = sortBySelect.value.split('-');
                 const sorted = [...filteredData].sort((a, b) => {
                     let aVal, bVal;
-                    if (sortKey === 'overall') {
-                        aVal = a.overall ?? -1;
-                        bVal = b.overall ?? -1;
-                    } else if (sortKey === 'date') {
+                    if (currentSort.key === 'date') {
                         aVal = new Date(a.date).getTime();
                         bVal = new Date(b.date).getTime();
+                    } else {
+                        // Handle numeric score columns: overall, gui_only, user_int, mcp
+                        aVal = a[currentSort.key] ?? -1;
+                        bVal = b[currentSort.key] ?? -1;
                     }
-                    return sortDir === 'desc' ? bVal - aVal : aVal - bVal;
+                    return currentSort.dir === 'desc' ? bVal - aVal : aVal - bVal;
                 });
 
                 // Render rows
@@ -636,29 +626,30 @@ uv sync</code></pre>
                     const starIcon = isFirst ? ' ⭐' : '';
                     
                     // Create clickable model name with link
-                    let modelLink = `<strong>${row.model}</strong>`;
+                    let modelName = row.model;
                     if (row.link && row.link !== '#') {
                         let href = row.link;
                         if (!href.startsWith('http://') && !href.startsWith('https://')) {
                             href = 'https://' + href;
                         }
-                        modelLink = `<a href="${href}" class="model-link" target="_blank" rel="noopener noreferrer"><strong>${row.model}</strong></a>`;
+                        modelName = `<a href="${href}" class="model-link" target="_blank" rel="noopener noreferrer">${row.model}</a>`;
                     }
+                    
+                    // Category badge class
+                    const categoryClass = row.model_type === 'Agentic Framework' ? 'tag is-info is-light' : 'tag is-link is-light';
+                    const categoryLabel = row.model_type === 'Agentic Framework' ? 'Agentic' : 'End-to-End';
                     
                     return `
                         <tr class="${rowClass}">
-                            <td class="has-text-centered"><strong>${rank}${starIcon}</strong></td>
-                            <td class="has-text-centered"><span class="tag ${row.model_type === 'Agentic Framework' ? 'is-info' : 'is-link'}">${row.category}</span></td>
-                            <td>${modelLink}</td>
-                            <td><em>${row.organization}</em></td>
-                            <td>
-                                <span class="icon-text">
-                                    <span class="icon is-small"><i class="far fa-calendar"></i></span>
-                                    <span>${formatDate(row.date)}</span>
-                                </span>
+                            <td class="has-text-centered"><strong>${rank}</strong></td>
+                            <td><span class="category-badge ${categoryClass}">${categoryLabel}</span></td>
+                            <td class="model-cell">
+                                <div class="model-name"><strong>${modelName}</strong></div>
+                                <div class="model-org">${row.organization}</div>
+                                <div class="model-date"><i class="far fa-calendar"></i> ${formatDate(row.date)}</div>
                             </td>
-                            <td class="has-text-centered">${row.max_steps}</td>
-                            <td class="has-text-centered"><strong class="has-text-primary">${row.overall}</strong></td>
+                            <!-- <td class="has-text-centered">${row.max_steps}</td> -->
+                            <td class="has-text-centered"><strong class="overall-score">${row.overall}</strong></td>
                             <td class="has-text-centered">${row.gui_only !== null ? row.gui_only : '-'}</td>
                             <td class="has-text-centered">${row.user_int !== null ? row.user_int : '-'}</td>
                             <td class="has-text-centered">${row.mcp !== null ? row.mcp : '-'}</td>

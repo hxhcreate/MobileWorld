@@ -13,6 +13,7 @@ from loguru import logger
 from mobile_world.agents.base import BaseAgent
 from mobile_world.agents.implementations.planner_executor import PlannerExecutorAgentMCP
 from mobile_world.agents.implementations.qwen3vl import Qwen3VLAgentMCP
+from mobile_world.agents.implementations.mai_ui_agent import MAIUINaivigationAgent
 
 AGENT_CONFIGS = {
     "qwen3vl": {
@@ -23,6 +24,9 @@ AGENT_CONFIGS = {
         "runtime_conf": {
             "history_n_images": 3,
         },
+    },
+    "mai_ui_agent": {
+        "class": MAIUINaivigationAgent,
     },
 }
 
@@ -82,7 +86,7 @@ def load_agent_from_file(file_path: str) -> type[BaseAgent]:
 
 
 def create_agent(
-    agent_type: str, model_name: str, llm_base_url: str, api_key: str = None, **kwargs
+    agent_type: str, model_name: str, llm_base_url: str, api_key: str = 'empty', **kwargs
 ):
     """Create an agent instance based on the agent type.
 
@@ -137,5 +141,13 @@ def create_agent(
             tools=kwargs["env"].tools,
             api_key=api_key,
             runtime_conf=config["runtime_conf"],
+            **kwargs,
+        )
+    elif agent_type == "mai_ui_agent":
+        return agent_class(
+            model_name=model_name,
+            llm_base_url=llm_base_url,
+            tools=kwargs["env"].tools,
+            api_key=api_key,
             **kwargs,
         )

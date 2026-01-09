@@ -11,9 +11,10 @@ from mobile_world.runtime.utils.helpers import (
     execute_adb,
     time_within_ten_secs,
 )
-from mobile_world.runtime.utils.models import APP_DICT
+from mobile_world.runtime.utils.models import APP_DICT, COMMON_APP_MAPPER
 
 APP_LOWER_DICT = {k.lower(): v for k, v in APP_DICT.items()}
+APP_LOWER_DICT.update({app_name.lower(): package_name for package_name, app_name in COMMON_APP_MAPPER.items()})
 
 
 class AndroidController:
@@ -253,12 +254,13 @@ class AndroidController:
 
     def launch_app(self, app_name: str) -> AdbResponse:
         command = None
+
         if app_name.lower() in APP_LOWER_DICT:
             command = f"adb -s {self.device} shell monkey -p {APP_LOWER_DICT[app_name.lower()]} -c android.intent.category.LAUNCHER 1"
             ret = execute_adb(command)
             if ret.success:
                 return ret
-        logger.error(
+        logger.warning(
             f"Failed to launch the app: {app_name}. Available app list: {list(APP_LOWER_DICT.keys())}"
         )
         return AdbResponse(

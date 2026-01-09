@@ -6,8 +6,8 @@ import pytz
 from loguru import logger
 
 from mobile_world.runtime.app_helpers.fossify_calendar import get_calendar_events
-from mobile_world.runtime.app_helpers.mail import get_sent_email_info, reset_chrome
-from mobile_world.runtime.app_helpers.system import enable_auto_time_sync
+from mobile_world.runtime.app_helpers.mail import get_sent_email_info
+from mobile_world.runtime.app_helpers.system import reset_chrome
 from mobile_world.runtime.controller import AndroidController
 from mobile_world.tasks.base import BaseTask
 

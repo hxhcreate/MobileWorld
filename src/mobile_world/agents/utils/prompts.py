@@ -305,6 +305,12 @@ SEED_PROMPT = Template("""## Function Definition
 {"type": "function", "name": "type", "parameters": {"type": "object", "properties": {"content": {"type": "string", "description": "Type content. If you want to submit your input, use \n at the end of content."}}, "required": ["content"]}, "description": "Type content."}
 {"type": "function", "name": "wait", "parameters": {"type": "object", "properties": {"time": {"type": "integer", "description": "Wait time in seconds."}}, "required": []}, "description": "Wait for a while."}
 
+{% if tools -%}
+## MCP Tools
+You are also provided with MCP tools, you can use them to complete the task.
+{{ tools }}
+{% endif -%}
+
 - To call a function, use the following structure without any suffix:
 
 <think> reasoning process </think>

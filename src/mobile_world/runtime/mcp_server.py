@@ -52,11 +52,14 @@ client_lock = Lock()
 class SyncMCPClient:
     """MCP client with sync interface. Uses persistent connection for stdio transports."""
 
-    def __init__(self, url: str | None = None, config: dict | None = None,
-            max_retries: int = 5,
-            retry_delay: float = 10,
-            retry_backoff: float = 2
-        ):
+    def __init__(
+        self,
+        url: str | None = None,
+        config: dict | None = None,
+        max_retries: int = 5,
+        retry_delay: float = 10,
+        retry_backoff: float = 2,
+    ):
         self.url = url
         self.config = config
         self.tools: list[dict[str, Any]] | None = None
@@ -64,7 +67,7 @@ class SyncMCPClient:
         self.max_retries = max_retries
         self.retry_delay = retry_delay
         self.retry_backoff = retry_backoff
-        
+
         self.timeout = 120
 
         self.client = Client(config) if config else None
@@ -78,8 +81,7 @@ class SyncMCPClient:
             try:
                 async with self.client:
                     tools_result = await asyncio.wait_for(
-                        self.client.list_tools(),
-                        timeout=self.timeout
+                        self.client.list_tools(), timeout=self.timeout
                     )
                     result = [t.model_dump() for t in tools_result]
                     if not result or len(result) == 0:
@@ -122,12 +124,14 @@ class SyncMCPClient:
     ) -> dict[str, Any]:
         last_exception = None
         delay = self.retry_delay
-        
+
         for attempt in range(self.max_retries):
             try:
                 if self.client:
                     async with self.client:
-                        result_content = await self.client.call_tool(name, arguments, timeout=self.timeout)
+                        result_content = await self.client.call_tool(
+                            name, arguments, timeout=self.timeout
+                        )
                         result = [t.model_dump() for t in result_content]
                         if not result or len(result) == 0:
                             raise ValueError(f"Empty result from tool {name}")
@@ -135,7 +139,7 @@ class SyncMCPClient:
                         return result
                 else:
                     raise ValueError("No client configured")
-                    
+
             except Exception as e:
                 last_exception = e
                 logger.warning(
@@ -145,7 +149,9 @@ class SyncMCPClient:
                     logger.info(f"Retrying in {delay} seconds...")
                     await asyncio.sleep(delay)
                     delay *= self.retry_backoff
-        error_msg = f"Failed to call tool {name} after {self.max_retries} attempts: {last_exception}"
+        error_msg = (
+            f"Failed to call tool {name} after {self.max_retries} attempts: {last_exception}"
+        )
         logger.error(error_msg)
         return {"result": error_msg}
 

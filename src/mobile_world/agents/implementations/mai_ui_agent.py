@@ -8,28 +8,27 @@ from PIL import Image
 
 from mobile_world.agents.base import MCPAgent
 from mobile_world.agents.utils.helpers import pil_to_base64
+from mobile_world.agents.utils.prompts import MAI_MOBILE_SYS_PROMPT_ASK_USER_MCP
 from mobile_world.runtime.utils.helpers import pretty_print_messages
 from mobile_world.runtime.utils.models import (
-    JSONAction,
-    FINISHED,
-    CLICK,
-    LONG_PRESS,
-    DOUBLE_TAP,
-    INPUT_TEXT,
-    SCROLL,
-    OPEN_APP,
-    DRAG,
-    WAIT,
     ANSWER,
     ASK_USER,
+    CLICK,
+    DOUBLE_TAP,
+    DRAG,
+    FINISHED,
+    INPUT_TEXT,
+    KEYBOARD_ENTER,
+    LONG_PRESS,
+    MCP,
     NAVIGATE_BACK,
     NAVIGATE_HOME,
-    KEYBOARD_ENTER,
+    OPEN_APP,
+    SCROLL,
     UNKNOWN,
-    MCP,
+    WAIT,
+    JSONAction,
 )
-from mobile_world.agents.utils.prompts import MAI_MOBILE_SYS_PROMPT_ASK_USER_MCP
-
 
 SCALE_FACTOR = 999
 
@@ -82,22 +81,25 @@ def parse_action_to_structure_output(text: str) -> dict[str, Any]:
 
     action = tool_call["arguments"]
 
-    # Normalize coordinates from SCALE_FACTOR range to [0, 1]
-    if "coordinate" in action:
-        coordinates = action["coordinate"]
-        if len(coordinates) == 2:
-            point_x, point_y = coordinates
-        elif len(coordinates) == 4:
-            x1, y1, x2, y2 = coordinates
-            point_x = (x1 + x2) / 2
-            point_y = (y1 + y2) / 2
-        else:
-            raise ValueError(
-                f"Invalid coordinate format: expected 2 or 4 values, got {len(coordinates)}"
-            )
-        point_x = point_x / SCALE_FACTOR
-        point_y = point_y / SCALE_FACTOR
-        action["coordinate"] = [point_x, point_y]
+    for coord_field in ["coordinate", "start_coordinate", "end_coordinate"]:
+        if coord_field in action:
+            coordinates = action[coord_field]
+
+            if len(coordinates) == 2:
+                point_x, point_y = coordinates
+            elif len(coordinates) == 4:
+                x1, y1, x2, y2 = coordinates
+                point_x = (x1 + x2) / 2
+                point_y = (y1 + y2) / 2
+            else:
+                raise ValueError(
+                    f"Invalid coordinate format: expected 2 or 4 values, got {len(coordinates)}"
+                )
+
+            point_x = point_x / SCALE_FACTOR
+            point_y = point_y / SCALE_FACTOR
+
+            action[coord_field] = [point_x, point_y]
 
     return {
         "thinking": thinking,
@@ -151,7 +153,9 @@ class MAIUINaivigationAgent(MCPAgent):
         self.history_n = self.runtime_conf["history_n"]
 
         # History tracking
-        self.history_images: list[tuple[Any, Any, Any]] = []  # (image, tool_call, ask_user_response)
+        self.history_images: list[
+            tuple[Any, Any, Any]
+        ] = []  # (image, tool_call, ask_user_response)
         self.history_responses: list[dict] = []
 
     @property
@@ -159,9 +163,7 @@ class MAIUINaivigationAgent(MCPAgent):
         """Generate the system prompt based on available MCP tools."""
         mcp_tools_str = None
         if self.tools:
-            mcp_tools_str = "\n".join(
-                [json.dumps(tool, ensure_ascii=False) for tool in self.tools]
-            )
+            mcp_tools_str = "\n".join([json.dumps(tool, ensure_ascii=False) for tool in self.tools])
         return MAI_MOBILE_SYS_PROMPT_ASK_USER_MCP.render(tools=mcp_tools_str)
 
     def initialize_hook(self, instruction: str) -> None:
@@ -187,10 +189,12 @@ class MAIUINaivigationAgent(MCPAgent):
             encoded_string = pil_to_base64(img_data)
             return {
                 "role": "user",
-                "content": [{
-                    "type": "image_url",
-                    "image_url": {"url": f"data:image/png;base64,{encoded_string}"},
-                }],
+                "content": [
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/png;base64,{encoded_string}"},
+                    }
+                ],
             }
 
     def _hide_history_images(self, messages: list[dict]) -> list[dict]:
@@ -315,9 +319,7 @@ class MAIUINaivigationAgent(MCPAgent):
         assert isinstance(obs_image, Image.Image)
         return obs_image.size
 
-    def _normalize_coord_to_pixel(
-        self, coord: list[float], obs_image: Any
-    ) -> tuple[int, int]:
+    def _normalize_coord_to_pixel(self, coord: list[float], obs_image: Any) -> tuple[int, int]:
         width, height = self._get_image_size(obs_image)
         return int(coord[0] * width), int(coord[1] * height)
 
@@ -356,8 +358,10 @@ class MAIUINaivigationAgent(MCPAgent):
             end_x, end_y = self._normalize_coord_to_pixel(end_coord, obs_image)
             return JSONAction(
                 action_type=DRAG,
-                start_x=start_x, start_y=start_y,
-                end_x=end_x, end_y=end_y,
+                start_x=start_x,
+                start_y=start_y,
+                end_x=end_x,
+                end_y=end_y,
             )
 
         if action_type == "system_button":

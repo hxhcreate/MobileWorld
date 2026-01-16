@@ -68,17 +68,19 @@ def parse_action(plan_output: str) -> tuple[str, str]:
         raise ValueError(f"Output is not in the correct format: {e}")
 
 
-def parse_response_to_action(action_str: str, image_width: int, image_height: int, scale_factor: int = 1000) -> dict:
+def parse_response_to_action(
+    action_str: str, image_width: int, image_height: int, scale_factor: int = 1000
+) -> dict:
     """
     Parse the JSON action from response and normalize it.
     Convert relative coordinates (0-999) to absolute coordinates based on image size.
-    
+
     Args:
         action_str: JSON action string from model
         image_width: Width of the screenshot image
         image_height: Height of the screenshot image
         scale_factor: Scale factor for the coordinates
-    
+
     Returns:
         Dictionary with action type and absolute coordinates
     """
@@ -103,9 +105,11 @@ def parse_response_to_action(action_str: str, image_width: int, image_height: in
                     relative_x, relative_y = coord[0], coord[1]
                     absolute_x = int(relative_x * image_width / scale_factor)
                     absolute_y = int(relative_y * image_height / scale_factor)
-                    
-                    logger.debug(f"Coordinate conversion: relative ({relative_x}, {relative_y}) -> absolute ({absolute_x}, {absolute_y})")
-                    
+
+                    logger.debug(
+                        f"Coordinate conversion: relative ({relative_x}, {relative_y}) -> absolute ({absolute_x}, {absolute_y})"
+                    )
+
                     return {
                         "action_type": action_type,
                         "x": absolute_x,
@@ -115,25 +119,31 @@ def parse_response_to_action(action_str: str, image_width: int, image_height: in
                     raise ValueError(f"Invalid coordinate format: {coord}")
             else:
                 raise ValueError(f"Missing coordinate for action type: {action_type}")
-        
+
         # Handle drag action
         elif action_type == "drag":
             if "start_coordinate" in action_data and "end_coordinate" in action_data:
                 start_coord = action_data["start_coordinate"]
                 end_coord = action_data["end_coordinate"]
-                if (isinstance(start_coord, list) and len(start_coord) == 2 and
-                    isinstance(end_coord, list) and len(end_coord) == 2):
+                if (
+                    isinstance(start_coord, list)
+                    and len(start_coord) == 2
+                    and isinstance(end_coord, list)
+                    and len(end_coord) == 2
+                ):
                     # Convert relative coordinates (0-999) to absolute coordinates
                     relative_start_x, relative_start_y = start_coord[0], start_coord[1]
                     relative_end_x, relative_end_y = end_coord[0], end_coord[1]
-                    
+
                     absolute_start_x = int(relative_start_x * image_width / scale_factor)
                     absolute_start_y = int(relative_start_y * image_height / scale_factor)
                     absolute_end_x = int(relative_end_x * image_width / scale_factor)
                     absolute_end_y = int(relative_end_y * image_height / scale_factor)
-                    
-                    logger.debug(f"Drag coordinate conversion: relative ({relative_start_x}, {relative_start_y}) -> ({relative_end_x}, {relative_end_y}) | absolute ({absolute_start_x}, {absolute_start_y}) -> ({absolute_end_x}, {absolute_end_y})")
-                    
+
+                    logger.debug(
+                        f"Drag coordinate conversion: relative ({relative_start_x}, {relative_start_y}) -> ({relative_end_x}, {relative_end_y}) | absolute ({absolute_start_x}, {absolute_start_y}) -> ({absolute_end_x}, {absolute_end_y})"
+                    )
+
                     return {
                         "action_type": "drag",
                         "start_x": absolute_start_x,
@@ -144,8 +154,8 @@ def parse_response_to_action(action_str: str, image_width: int, image_height: in
                 else:
                     raise ValueError(f"Invalid drag coordinates: {start_coord}, {end_coord}")
             else:
-                raise ValueError(f"Missing coordinates for drag action")
-        
+                raise ValueError("Missing coordinates for drag action")
+
         # Handle other action types
         elif action_type in [
             "open_app",
@@ -188,14 +198,15 @@ class GeneralE2EAgentMCP(MCPAgent):
         llm_base_url: str,
         api_key: str = "empty",
         observation_type: str = "screenshot",
-        runtime_conf: dict = {},
-        tools: list[dict] = None,
+        runtime_conf: dict = {
+            "history_n_images": 3,
+            "temperature": 0.0,
+            "max_tokens": 2048,
+        },
+        tools: list[dict] = [],
         scale_factor: int = 1000,
         **kwargs,
     ):
-        # Initialize with empty tools list if not provided
-        if tools is None:
-            tools = []
         super().__init__(tools=tools, **kwargs)
 
         # Agent parameters
@@ -365,21 +376,19 @@ class GeneralE2EAgentMCP(MCPAgent):
         if response is None:
             raise ValueError("Agent LLM failed")
         if action_str is None:
-            return "Agent LLM failed", JSONAction(
-                action_type="unknown", text="Agent LLM failed"
-            )
+            return "Agent LLM failed", JSONAction(action_type="unknown", text="Agent LLM failed")
 
         # Get image dimensions for coordinate conversion
         image_width, image_height = obs_image.size
         logger.debug(f"Image size: {image_width}x{image_height}")
 
         try:
-            json_action_dict = parse_response_to_action(action_str, image_width, image_height, self.scale_factor)
+            json_action_dict = parse_response_to_action(
+                action_str, image_width, image_height, self.scale_factor
+            )
         except Exception as e:
             logger.error(f"Error parsing agent response: {e}")
-            return "Agent LLM failed", JSONAction(
-                action_type="unknown", text="Agent LLM failed"
-            )
+            return "Agent LLM failed", JSONAction(action_type="unknown", text="Agent LLM failed")
 
         logger.info(f"Parsed thought: {thought}")
         logger.info(f"Parsed action: {json_action_dict}")

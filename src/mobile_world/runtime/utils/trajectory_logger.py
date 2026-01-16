@@ -20,6 +20,14 @@ def extract_click_coordinates(action):
     return action_corr
 
 
+def extract_drag_coordinates(action):
+    start_x = action.get("start_x")
+    start_y = action.get("start_y")
+    end_x = action.get("end_x")
+    end_y = action.get("end_y")
+    return (start_x, start_y, end_x, end_y)
+
+
 # Function to draw points on an image
 def draw_clicks_on_image(image_path, output_path, click_coords):
     image = Image.open(image_path)
@@ -30,6 +38,32 @@ def draw_clicks_on_image(image_path, output_path, click_coords):
     radius = 20
     if x and y:  # if get the coordinate, draw a circle
         draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill="red", outline="red")
+
+    # Save the modified image
+    save_screenshot(image, output_path)
+
+
+# Function to draw a drag line on an image
+def draw_drag_on_image(image_path, output_path, drag_coords):
+    image = Image.open(image_path)
+    draw = ImageDraw.Draw(image)
+
+    (start_x, start_y, end_x, end_y) = drag_coords
+    if start_x and start_y and end_x and end_y:
+        # Draw a line from start to end
+        draw.line((start_x, start_y, end_x, end_y), fill="blue", width=5)
+        # Draw circles at start (green) and end (red) points
+        radius = 15
+        draw.ellipse(
+            (start_x - radius, start_y - radius, start_x + radius, start_y + radius),
+            fill="green",
+            outline="green",
+        )
+        draw.ellipse(
+            (end_x - radius, end_y - radius, end_x + radius, end_y + radius),
+            fill="red",
+            outline="red",
+        )
 
     # Save the modified image
     save_screenshot(image, output_path)
@@ -113,6 +147,14 @@ class TrajLogger:
             draw_clicks_on_image(
                 original_screenshot_path, marked_screenshot_path, click_coordinates
             )
+        elif action_type == "drag":
+            drag_coordinates = extract_drag_coordinates(action)
+            marked_screenshot_path = os.path.join(
+                self.log_file_dir,
+                self.marked_screenshots_dir,
+                f"marked-{task_name}-{task_id}-{step}.png",
+            )
+            draw_drag_on_image(original_screenshot_path, marked_screenshot_path, drag_coordinates)
 
     def log_tools(self, tools: list[dict]):
         self.tools = tools

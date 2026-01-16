@@ -42,7 +42,8 @@ While maintaining the same level of rigorous, reproducible evaluation as Android
 </p>
 
 ## 📢 Updates
-- **2026-12-29**: We released [MAI-UI](https://tongyi-mai.github.io/MAI-UI/)🔥, achieving SOTA performance with a 41.7% success rate in the end-to-end models category on the MobileWorld benchmark.
+- **2026-01-16**: New agent implementations: [MAI-UI](https://tongyi-mai.github.io/MAI-UI/), [Gemini-3-Pro](https://deepmind.google/models/gemini/pro/) (general end-to-end), [Seed-1.8](https://seed.bytedance.com/en/seed1_8), [GELab-Zero](https://arxiv.org/abs/2512.15431). New [leaderboard records](https://tongyi-mai.github.io/MobileWorld/#leaderboard): Seed-1.8 and Gemini-3-Pro in end-to-end category.
+- **2025-12-29**: We released [MAI-UI](https://tongyi-mai.github.io/MAI-UI/)🔥, achieving SOTA performance with a 41.7% success rate in the end-to-end models category on the MobileWorld benchmark.
 - **2025-12-23**: Initial release of MobileWorld benchmark. Check out our [paper](https://arxiv.org/abs/2512.19432) and [website](https://tongyi-mai.github.io/MobileWorld/)🔥.
 - **2025-12-23**: Docker image `ghcr.io/Tongyi-MAI/mobile_world:latest` available for public use.
 

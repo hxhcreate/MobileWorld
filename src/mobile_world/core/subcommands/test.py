@@ -27,9 +27,9 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
         help="The goal/task description to execute",
     )
     test_parser.add_argument(
-        "log_verbose",
-        type=bool,
+        "--log_verbose",
         help="Whether to log verbose messages",
+        action="store_true",
         default=False,
     )
 

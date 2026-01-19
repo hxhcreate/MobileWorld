@@ -197,7 +197,7 @@ If you want to use MCP tools, you must output as the following format:
 
 
 ## Note
-- Available Apps: `["微信", "抖音", "QQ", "支付宝", "淘宝", "小红书", "飞猪旅行"]`.
+- Available Apps: `["桌面","Contacts","Settings","设置","Clock","Maps","Chrome","Calendar","files","Gallery","淘店","Taodian","Mattermost","Mastodon","Mail","SMS","Camera"]`.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in <thinking></thinking> part.
 """.strip()
 )

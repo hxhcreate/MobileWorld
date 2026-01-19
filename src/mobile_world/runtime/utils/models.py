@@ -417,6 +417,7 @@ COMMON_APP_MAPPER = {
     "com.einnovation.temu": "Temu",
     "com.zhiliaoapp.musically": "TikTok",
     "org.videolan.vlc": "VLC",
+    "com.tencent.qqlive": "腾讯视频",
 }
 
 

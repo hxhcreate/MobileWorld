@@ -7,7 +7,7 @@ from loguru import logger
 from PIL import Image
 
 from mobile_world.agents.base import MCPAgent
-from mobile_world.agents.utils.helpers import pil_to_base64
+from mobile_world.agents.utils.helpers import pil_to_base64, reverse_swipe_direction
 from mobile_world.agents.utils.prompts import MAI_MOBILE_SYS_PROMPT_ASK_USER_MCP
 from mobile_world.runtime.utils.helpers import pretty_print_messages
 from mobile_world.runtime.utils.models import (
@@ -344,7 +344,7 @@ class MAIUINaivigationAgent(MCPAgent):
             return JSONAction(action_type=type_map[action_type], x=x, y=y)
 
         if action_type == "swipe":
-            direction = action_json.get("direction", "up")
+            direction = reverse_swipe_direction(action_json.get("direction", "up"))
             coordinate = action_json.get("coordinate")
             if coordinate:
                 x, y = self._normalize_coord_to_pixel(coordinate, obs_image)

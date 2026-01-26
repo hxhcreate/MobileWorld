@@ -62,6 +62,17 @@ class BaseAgent(ABC):
         )
         logger.debug(f"built the OpenAI client with base_url={base_url}")
 
+    def _wrap_stream_with_usage_logging(self, stream: Any) -> Any:
+        """Wrap a streaming response to log usage when stream completes."""
+        final_usage = None
+        for chunk in stream:
+            if hasattr(chunk, "usage") and chunk.usage is not None:
+                final_usage = chunk
+            yield chunk
+
+        if final_usage is not None:
+            self._log_openai_usage(final_usage)
+
     def openai_chat_completions_create(
         self,
         model: str,
@@ -71,13 +82,16 @@ class BaseAgent(ABC):
         **kwargs: Any,
     ) -> str | None:
         if stream:
+            # Enable usage reporting in stream
+            kwargs.setdefault("stream_options", {})
+            kwargs["stream_options"]["include_usage"] = True
             response = self.openai_client.chat.completions.create(
                 model=model,
                 messages=messages,
                 **kwargs,
                 stream=True,
             )
-            return response
+            return self._wrap_stream_with_usage_logging(response)
         while retry_times > 0:
             try:
                 if "claude" in model:

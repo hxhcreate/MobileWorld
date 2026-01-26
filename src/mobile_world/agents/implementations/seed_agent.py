@@ -169,7 +169,7 @@ class SeedAgent(MCPAgent):
         self.build_openai_client(base_url=self.base_url, api_key=self.api_key)
 
         # Extract config values
-        self.history_n = self.runtime_conf["history_n"]
+        self.history_n = self.runtime_conf.get("history_n", 3)
         self.temperature = self.runtime_conf["temperature"]
         self.top_p = self.runtime_conf["top_p"]
         self.max_tokens = self.runtime_conf["max_tokens"]
@@ -296,8 +296,17 @@ class SeedAgent(MCPAgent):
             if i + 1 < len(self.history_images):
                 img_b64, tool_call_res, ask_user_res = self.history_images[i + 1]
                 messages.append(self._get_user_message(img_b64, tool_call_res, ask_user_res))
+        messages_with_limited_images = []
+        image_count = 0
+        for msg in messages[::-1]:
+            if msg["role"] == "tool" and msg["content"][0]["type"] == "image_url":
+                image_count += 1
+                if image_count > self.history_n:
+                    continue
+            messages_with_limited_images.append(msg)
+        messages_with_limited_images = messages_with_limited_images[::-1]
 
-        return messages
+        return messages_with_limited_images
 
     def _convert_to_json_action(
         self, parsed_action: dict, image_width: int, image_height: int

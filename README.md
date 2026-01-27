@@ -49,8 +49,8 @@ While maintaining the same level of rigorous, reproducible evaluation as Android
         * **GUI-Only Tasks:** **Seed-1.8** secured the Top-1 spot for end-to-end performance with a **52.1%** success rate, followed by **Gemini-3-Pro** (**51.3%**) and **Claude-4.5-Sonnet** (**47.8%**).
         * **Combined GUI & User Interaction:** **MAI-UI-235B-A22B** leads the leaderboard with a **45.4%** success rate, surpassing **Claude-4.5-Sonnet** (**43.2%**) and **Seed-1.8** (**40.8%**).    
     * **Supported Models:**
-        * **End-to-End:** Gemini-3-Pro, Claude-4.5-sonnet, and Seed-1.8.
-        * **Agentic:** Gemini-3-Pro, Claude-4.5-sonnet, GPT-5, MAI-UI, and GELab-Zero.
+        * **End-to-End:**  MAI-UI, Gemini-3-Pro, Claude-4.5-sonnet, Seed-1.8, and GELab-Zero.
+        * **Agentic:** Gemini-3-Pro, Claude-4.5-sonnet, and GPT-5.
     * **Implementation Details:**
         * [**MAI-UI**](https://tongyi-mai.github.io/MAI-UI/) ([code](src/mobile_world/agents/implementations/mai_ui_agent.py))
         * [**Gemini-3-Pro**](https://deepmind.google/models/gemini/pro/): End-to-end version adapted from our agentic framework utilizing Gemini’s built-in grounding ([code](src/mobile_world/agents/implementations/general_e2e_agent.py)).

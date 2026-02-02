@@ -126,6 +126,13 @@ code, pre, .font-mono {
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.input-row-logroot {
+    display: flex;
+    gap: 16px;
+    flex: 2;
 }
 
 .input-group-item {

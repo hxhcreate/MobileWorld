@@ -19,6 +19,51 @@ def get_log_root_state() -> dict[str, str]:
     return _log_root_state
 
 
+def is_valid_trajectory_dir(path: str) -> bool:
+    """Check if a directory is a valid trajectory log directory.
+
+    A valid trajectory directory contains either:
+    - Task folders with trajectory data (standard mode)
+    - User trajectory folders (id_X/user_task structure)
+    """
+    if not path or not os.path.exists(path) or not os.path.isdir(path):
+        return False
+
+    # Check for user trajectory structure
+    if is_user_trajectory_log(path):
+        return True
+
+    # Check for standard task folders with traj.json
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        if os.path.isdir(item_path) and "_backup_" not in item:
+            traj_file = os.path.join(item_path, "traj.json")
+            if os.path.exists(traj_file):
+                return True
+
+    return False
+
+
+def get_child_trajectory_dirs(parent_path: str) -> list[str]:
+    """Get all valid trajectory directories within a parent directory.
+
+    Returns a list of directory names (not full paths) that are valid trajectory dirs.
+    """
+    if not parent_path or not os.path.exists(parent_path) or not os.path.isdir(parent_path):
+        return []
+
+    valid_dirs = []
+    try:
+        for item in os.listdir(parent_path):
+            item_path = os.path.join(parent_path, item)
+            if os.path.isdir(item_path) and is_valid_trajectory_dir(item_path):
+                valid_dirs.append(item)
+    except PermissionError:
+        pass
+
+    return sorted(valid_dirs)
+
+
 def get_registry():
     """Get or initialize the task registry."""
     global _task_registry

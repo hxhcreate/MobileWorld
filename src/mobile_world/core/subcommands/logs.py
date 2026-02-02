@@ -28,7 +28,7 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
         "--log_dir",
         dest="log_dir",
         required=True,
-        help="Root directory for log files (e.g., traj_logs/logs_20251029_4)",
+        help="Trajectory directory or parent directory containing trajectory dirs (e.g., traj_logs/logs_20251029_4 or traj_logs/)",
     )
     view_parser.add_argument(
         "--port",
@@ -36,7 +36,6 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
         default=8760,
         help="Port for the viewer (default: 8760)",
     )
-
 
     # logs results - Print results table
     results_parser = logs_subparsers.add_parser(

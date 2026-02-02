@@ -14,6 +14,7 @@ from mobile_world.core.log_viewer.utils import (
     calculate_task_stats,
     get_all_tags,
     get_all_trajectory_steps,
+    get_child_trajectory_dirs,
     get_latest_screenshot,
     get_latest_trajectory_action,
     get_log_root_state,
@@ -28,6 +29,7 @@ from mobile_world.core.log_viewer.utils import (
     get_user_trajectory_folders,
     get_user_trajectory_task_folder,
     is_user_trajectory_log,
+    is_valid_trajectory_dir,
 )
 
 
@@ -1271,16 +1273,80 @@ def register_routes(rt):
         items.append(page_link(current_page + 1, "Next »", disabled=current_page >= total_pages))
         return Div(*items, cls="pagination")
 
+    def _build_log_root_controls(
+        log_root_input: str,
+        selected_subdir: str,
+        child_dirs: list[str],
+        search_query: str,
+        extra_hx_include: str = "",
+    ) -> Div:
+        """Build the log root input and optional subdirectory dropdown."""
+        controls = [
+            Div(
+                Label("Log Root"),
+                Input(
+                    type="text",
+                    name="log_root",
+                    value=log_root_input,
+                    placeholder="e.g., traj_logs/logs_20251029_4 or traj_logs/",
+                    hx_get="/",
+                    hx_target="body",
+                    hx_trigger="keyup changed delay:500ms",
+                    hx_swap="outerHTML",
+                    hx_include=f"[name='search_query']{extra_hx_include}",
+                ),
+                cls="input-group-item input-group-wide" if not child_dirs else "input-group-item",
+            ),
+        ]
+
+        if child_dirs:
+            controls.append(
+                Div(
+                    Label("Trajectory Dir"),
+                    Select(
+                        Option("-- Select --", value="", selected=not selected_subdir),
+                        *[Option(d, value=d, selected=selected_subdir == d) for d in child_dirs],
+                        name="selected_subdir",
+                        hx_get="/",
+                        hx_target="body",
+                        hx_trigger="change",
+                        hx_swap="outerHTML",
+                        hx_include=f"[name='log_root'], [name='search_query']{extra_hx_include}",
+                    ),
+                    cls="input-group-item",
+                )
+            )
+
+        return Div(*controls, cls="input-row-logroot")
+
     @rt("/")
     def index(request):
         """Main page showing all tasks."""
         log_root_state = get_log_root_state()
         log_root_raw = request.query_params.get("log_root", "")
-        log_root = unquote(log_root_raw) if log_root_raw else ""
+        log_root_input = unquote(log_root_raw) if log_root_raw else ""
+        selected_subdir = request.query_params.get("selected_subdir", "")
+
+        # Determine effective log_root (combining input + subdir if applicable)
+        child_dirs: list[str] = []
+        log_root = ""
+
+        if log_root_input:
+            if is_valid_trajectory_dir(log_root_input):
+                # Direct trajectory directory
+                log_root = log_root_input
+            else:
+                # Check if it's a parent directory with child trajectory dirs
+                child_dirs = get_child_trajectory_dirs(log_root_input)
+                if child_dirs and selected_subdir and selected_subdir in child_dirs:
+                    log_root = os.path.join(log_root_input, selected_subdir)
+                elif not child_dirs:
+                    # Not a valid trajectory dir and no children - still set it for display
+                    log_root = log_root_input
 
         if log_root:
             log_root_state["log_root"] = log_root
-        elif not log_root:
+        elif not log_root_input:
             log_root = log_root_state.get("log_root", "")
             if log_root:
                 logger.info(f"Retrieved log root from state: {log_root}")
@@ -1334,20 +1400,8 @@ def register_routes(rt):
                     Div(
                         Form(
                             Div(
-                                Div(
-                                    Label("Log Root"),
-                                    Input(
-                                        type="text",
-                                        name="log_root",
-                                        value=log_root,
-                                        placeholder="e.g., traj_logs/glm01",
-                                        hx_get="/",
-                                        hx_target="body",
-                                        hx_trigger="keyup changed delay:500ms",
-                                        hx_swap="outerHTML",
-                                        hx_include="[name='search_query']",
-                                    ),
-                                    cls="input-group-item input-group-wide",
+                                _build_log_root_controls(
+                                    log_root_input, selected_subdir, child_dirs, search_query
                                 ),
                                 Div(
                                     Label("Search"),
@@ -1360,7 +1414,7 @@ def register_routes(rt):
                                         hx_target="body",
                                         hx_trigger="keyup changed delay:300ms",
                                         hx_swap="outerHTML",
-                                        hx_include="[name='log_root']",
+                                        hx_include="[name='log_root'], [name='selected_subdir']",
                                     ),
                                     cls="input-group-item",
                                 ),
@@ -1498,20 +1552,12 @@ def register_routes(rt):
                 Div(
                     Form(
                         Div(
-                            Div(
-                                Label("Log Root"),
-                                Input(
-                                    type="text",
-                                    name="log_root",
-                                    value=log_root,
-                                    placeholder="e.g., traj_logs/logs_20251029_4",
-                                    hx_get="/",
-                                    hx_target="body",
-                                    hx_trigger="keyup changed delay:500ms",
-                                    hx_swap="outerHTML",
-                                    hx_include="[name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
-                                ),
-                                cls="input-group-item input-group-wide",
+                            _build_log_root_controls(
+                                log_root_input,
+                                selected_subdir,
+                                child_dirs,
+                                search_query,
+                                ", [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh']",
                             ),
                             Div(
                                 Label("Search Task"),
@@ -1524,7 +1570,7 @@ def register_routes(rt):
                                     hx_target="body",
                                     hx_trigger="keyup changed delay:300ms",
                                     hx_swap="outerHTML",
-                                    hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh']",
+                                    hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh']",
                                 ),
                                 cls="input-group-item",
                             ),
@@ -1559,7 +1605,7 @@ def register_routes(rt):
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
-                                    hx_include="[name='log_root'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
+                                    hx_include="[name='log_root'], [name='selected_subdir'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
                                 ),
                                 cls="filter-item",
                             ),
@@ -1586,7 +1632,7 @@ def register_routes(rt):
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
-                                    hx_include="[name='log_root'], [name='status_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
+                                    hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
                                 ),
                                 cls="filter-item",
                             ),
@@ -1611,7 +1657,7 @@ def register_routes(rt):
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
-                                    hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='auto_refresh'], [name='search_query']",
+                                    hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='auto_refresh'], [name='search_query']",
                                 ),
                                 cls="filter-item",
                             ),
@@ -1627,7 +1673,7 @@ def register_routes(rt):
                                             hx_get="/refresh",
                                             hx_target="#refreshable-content",
                                             hx_swap="outerHTML",
-                                            hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='page'], [name='search_query']",
+                                            hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='page'], [name='search_query']",
                                         ),
                                         " Enabled",
                                         cls="checkbox-label",
@@ -1707,7 +1753,7 @@ def register_routes(rt):
                     hx_target="this" if (log_root and is_auto_refresh) else None,
                     hx_trigger="every 5s" if (log_root and is_auto_refresh) else None,
                     hx_swap="outerHTML" if (log_root and is_auto_refresh) else None,
-                    hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='page'], [name='search_query']"
+                    hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='page'], [name='search_query']"
                     if (log_root and is_auto_refresh)
                     else None,
                     hx_on_after_swap="document.getElementById('last-update-time').textContent = 'Last Updated: ' + new Date().toLocaleString();"
@@ -1723,7 +1769,7 @@ def register_routes(rt):
                     hx_get="/refresh" if log_root else None,
                     hx_target="#refreshable-content",
                     hx_swap="outerHTML",
-                    hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
+                    hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
                     onclick="document.getElementById('last-update-time').textContent = 'Last Updated: ' + new Date().toLocaleString();",
                 )
                 if log_root
@@ -1739,7 +1785,20 @@ def register_routes(rt):
         log_root_raw = request.query_params.get("log_root", "") or log_root_state.get(
             "log_root", ""
         )
-        log_root = unquote(log_root_raw) if log_root_raw else ""
+        log_root_input = unquote(log_root_raw) if log_root_raw else ""
+        selected_subdir = request.query_params.get("selected_subdir", "")
+
+        # Determine effective log_root
+        log_root = ""
+        if log_root_input:
+            if is_valid_trajectory_dir(log_root_input):
+                log_root = log_root_input
+            else:
+                child_dirs = get_child_trajectory_dirs(log_root_input)
+                if child_dirs and selected_subdir and selected_subdir in child_dirs:
+                    log_root = os.path.join(log_root_input, selected_subdir)
+                elif not child_dirs:
+                    log_root = log_root_input
 
         if not log_root:
             return Div("No log root specified", cls="empty-state", id="refreshable-content")
@@ -1824,7 +1883,7 @@ def register_routes(rt):
             hx_target="this" if auto_refresh else None,
             hx_trigger="every 5s" if auto_refresh else None,
             hx_swap="outerHTML" if auto_refresh else None,
-            hx_include="[name='log_root'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='page'], [name='search_query']"
+            hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='page'], [name='search_query']"
             if auto_refresh
             else None,
             hx_on_after_swap="document.getElementById('last-update-time').textContent = 'Last Updated: ' + new Date().toLocaleString();"

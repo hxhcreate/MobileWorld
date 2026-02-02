@@ -1,4 +1,5 @@
 import json
+import os
 import time
 from typing import Any
 
@@ -110,6 +111,7 @@ def parse_response_to_action(
                 if isinstance(coord, list) and len(coord) == 2:
                     # Convert relative coordinates (0-999) to absolute coordinates
                     relative_x, relative_y = coord[0], coord[1]
+
                     absolute_x = int(relative_x * image_width / scale_factor_x)
                     absolute_y = int(relative_y * image_height / scale_factor_y)
 
@@ -225,6 +227,8 @@ class GeneralE2EAgentMCP(MCPAgent):
         self.scale_factor = scale_factor
         if "claude" in self.model_name.lower():
             self.scale_factor = CLAUDE_IMAGE_SIZE
+        if "k2.5" in self.model_name.lower():
+            self.scale_factor = 1
 
         logger.debug(f"Agent runtime_conf = {self.runtime_conf}")
         logger.debug(f"Agent scale_factor = {self.scale_factor}")
@@ -233,6 +237,9 @@ class GeneralE2EAgentMCP(MCPAgent):
         logger.debug(f"Agent base_url={self.llm_base_url} model={self.model_name}")
 
         self.history_n_images = self.runtime_conf.pop("history_n_images", 3)
+        if os.getenv("HISTORY_N_IMAGES") is not None:
+            self.history_n_images = int(os.getenv("HISTORY_N_IMAGES"))
+
         self.history_images = []
         self.history_responses = []
         self.actions = []
@@ -352,7 +359,7 @@ class GeneralE2EAgentMCP(MCPAgent):
         logger.debug(f"Constructed {len(messages) // 2} history turns.")
         messages = self._hide_history_images(messages)
 
-        pretty_print_messages(messages, max_messages=4)
+        pretty_print_messages(messages, max_messages=6)
         logger.debug("*" * 100)
 
         try_times = 3

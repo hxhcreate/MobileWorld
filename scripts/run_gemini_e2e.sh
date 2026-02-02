@@ -1,6 +1,6 @@
 sudo mw env run --count 5 --launch-interval 20
 
-sudo mw eval \
+sudo HISTORY_N_IMAGES=3 mw eval \
     --agent_type general_e2e \
     --task ALL \
     --max_round 50 \

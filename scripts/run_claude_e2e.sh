@@ -2,7 +2,7 @@ sudo mw env run --count 5 --launch-interval 20
 
 
 # make sure your model name has "claude" in it, the general_e2e agent use partial match to recognize Claudes. As claude's grounding requires image resize.
-sudo mw eval \
+sudo HISTORY_N_IMAGES=3 mw eval \
     --agent_type general_e2e \
     --task ALL \
     --max_round 50 \

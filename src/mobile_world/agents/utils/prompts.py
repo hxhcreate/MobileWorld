@@ -229,7 +229,7 @@ Respond with EXACT JSON format for one of these actions:
 
 Note:
 - The coordinate is the center of the element to be clicked/long-pressed/dragged.
-- x, y are coordinates in the screen, the origin is the top-left corner of the screen. 
+- x, y are coordinates in the screen, the origin is the top-left corner of the screen.
 - x, y are numbers, the range is normalized to [0, {{ scale_factor }}].
 
 # Execution Principles

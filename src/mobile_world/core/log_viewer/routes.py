@@ -33,8 +33,22 @@ from mobile_world.core.log_viewer.utils import (
 )
 
 
-def register_routes(rt):
-    """Register all routes with the given router."""
+def register_routes(rt, base_path: str = "/"):
+    """Register all routes with the given router.
+
+    Args:
+        rt: The router to register routes with.
+        base_path: Base path for all URLs (e.g., "/" or "/site/").
+    """
+    # Normalize base_path
+    if not base_path.endswith("/"):
+        base_path = base_path + "/"
+
+    def url(path: str) -> str:
+        """Build a URL with the base path prefix."""
+        if path.startswith("/"):
+            path = path[1:]
+        return base_path + path
 
     ITEMS_PER_PAGE = 20
     GOAL_TRUNCATE_LENGTH = 80
@@ -98,7 +112,9 @@ def register_routes(rt):
                 return Span(label, cls="page-link current")
             return A(
                 label,
-                href=f"/?log_root={quote(log_root)}&status_filter={status_filter}&score_filter={score_filter}&tag_filter={tag_filter}&search_query={quote(search_query)}&page={page_num}",
+                href=url(
+                    f"?log_root={quote(log_root)}&status_filter={status_filter}&score_filter={score_filter}&tag_filter={tag_filter}&search_query={quote(search_query)}&page={page_num}"
+                ),
                 cls="page-link",
             )
 
@@ -297,7 +313,9 @@ def register_routes(rt):
             screenshot_url = None
             if latest_screenshot:
                 filename, subfolder = latest_screenshot
-                screenshot_url = f"/static/screenshots/{task_name}/{subfolder}/{filename.replace('.png', '')}?log_root={quote(log_root)}"
+                screenshot_url = url(
+                    f"static/screenshots/{task_name}/{subfolder}/{filename.replace('.png', '')}?log_root={quote(log_root)}"
+                )
 
             task_rows.append(
                 Tr(
@@ -314,7 +332,7 @@ def register_routes(rt):
                     Td(
                         A(
                             task_name,
-                            href=f"/task/{task_name}?log_root={quote(log_root)}",
+                            href=url(f"task/{task_name}?log_root={quote(log_root)}"),
                             target="_blank",
                         ),
                         cls="task-name-col",
@@ -382,7 +400,9 @@ def register_routes(rt):
             screenshot_url = None
             if latest_screenshot:
                 filename, subfolder = latest_screenshot
-                screenshot_url = f"/static/user_screenshots/{traj_id}/{subfolder}/{filename.replace('.png', '')}?log_root={quote(log_root)}"
+                screenshot_url = url(
+                    f"static/user_screenshots/{traj_id}/{subfolder}/{filename.replace('.png', '')}?log_root={quote(log_root)}"
+                )
 
             task_rows.append(
                 Tr(
@@ -399,7 +419,7 @@ def register_routes(rt):
                     Td(
                         A(
                             traj_id,
-                            href=f"/user_task/{traj_id}?log_root={quote(log_root)}",
+                            href=url(f"user_task/{traj_id}?log_root={quote(log_root)}"),
                             target="_blank",
                         ),
                         cls="task-name-col",
@@ -518,7 +538,9 @@ def register_routes(rt):
             action = step_data.get("action", {})
             action_type = action.get("action_type", "N/A")
             prediction = step_data.get("prediction", "")
-            screenshot_url = f"/static/user_screenshots/{traj_id}/{subfolder}/{screenshot_file.replace('.png', '')}?log_root={quote(log_root)}"
+            screenshot_url = url(
+                f"static/user_screenshots/{traj_id}/{subfolder}/{screenshot_file.replace('.png', '')}?log_root={quote(log_root)}"
+            )
 
             next_step_data = step_map.get(step_num + 1, {})
             ask_user_response = next_step_data.get("ask_user_response")
@@ -669,7 +691,7 @@ def register_routes(rt):
                     Div(
                         A(
                             "← Back to Trajectory List",
-                            href=f"/?log_root={quote(log_root)}",
+                            href=url(f"?log_root={quote(log_root)}"),
                         ),
                         cls="back-nav",
                     ),
@@ -885,7 +907,9 @@ def register_routes(rt):
             action = step_data.get("action", {})
             action_type = action.get("action_type", "N/A")
             prediction = step_data.get("prediction", "")
-            screenshot_url = f"/static/screenshots/{task_name}/{subfolder}/{screenshot_file.replace('.png', '')}?log_root={quote(log_root)}"
+            screenshot_url = url(
+                f"static/screenshots/{task_name}/{subfolder}/{screenshot_file.replace('.png', '')}?log_root={quote(log_root)}"
+            )
 
             # Get ask_user_response and tool_call from next step
             next_step_data = step_map.get(step_num + 1, {})
@@ -1047,7 +1071,7 @@ def register_routes(rt):
                     Div(
                         A(
                             "← Back to Task List",
-                            href=f"/?log_root={quote(log_root)}",
+                            href=url(f"?log_root={quote(log_root)}"),
                         ),
                         cls="back-nav",
                     ),
@@ -1246,7 +1270,9 @@ def register_routes(rt):
                 return Span(label, cls="page-link current")
             return A(
                 label,
-                href=f"/?log_root={quote(log_root)}&search_query={quote(search_query)}&page={page_num}",
+                href=url(
+                    f"?log_root={quote(log_root)}&search_query={quote(search_query)}&page={page_num}"
+                ),
                 cls="page-link",
             )
 
@@ -1289,7 +1315,7 @@ def register_routes(rt):
                     name="log_root",
                     value=log_root_input,
                     placeholder="e.g., traj_logs/logs_20251029_4 or traj_logs/",
-                    hx_get="/",
+                    hx_get=url(""),
                     hx_target="body",
                     hx_trigger="keyup changed delay:500ms",
                     hx_swap="outerHTML",
@@ -1307,7 +1333,7 @@ def register_routes(rt):
                         Option("-- Select --", value="", selected=not selected_subdir),
                         *[Option(d, value=d, selected=selected_subdir == d) for d in child_dirs],
                         name="selected_subdir",
-                        hx_get="/",
+                        hx_get=url(""),
                         hx_target="body",
                         hx_trigger="change",
                         hx_swap="outerHTML",
@@ -1410,7 +1436,7 @@ def register_routes(rt):
                                         name="search_query",
                                         value=search_query,
                                         placeholder="Filter by ID or goal...",
-                                        hx_get="/",
+                                        hx_get=url(""),
                                         hx_target="body",
                                         hx_trigger="keyup changed delay:300ms",
                                         hx_swap="outerHTML",
@@ -1566,7 +1592,7 @@ def register_routes(rt):
                                     name="search_query",
                                     value=search_query,
                                     placeholder="Filter by task name...",
-                                    hx_get="/",
+                                    hx_get=url(""),
                                     hx_target="body",
                                     hx_trigger="keyup changed delay:300ms",
                                     hx_swap="outerHTML",
@@ -1601,7 +1627,7 @@ def register_routes(rt):
                                         selected=status_filter == "finished",
                                     ),
                                     name="status_filter",
-                                    hx_get="/",
+                                    hx_get=url(""),
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
@@ -1628,7 +1654,7 @@ def register_routes(rt):
                                         selected=score_filter == "failed",
                                     ),
                                     name="score_filter",
-                                    hx_get="/",
+                                    hx_get=url(""),
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
@@ -1653,7 +1679,7 @@ def register_routes(rt):
                                         for tag in all_tags
                                     ],
                                     name="tag_filter",
-                                    hx_get="/",
+                                    hx_get=url(""),
                                     hx_target="body",
                                     hx_trigger="change",
                                     hx_swap="outerHTML",
@@ -1670,7 +1696,7 @@ def register_routes(rt):
                                             name="auto_refresh",
                                             value="true",
                                             checked=is_auto_refresh,
-                                            hx_get="/refresh",
+                                            hx_get=url("refresh"),
                                             hx_target="#refreshable-content",
                                             hx_swap="outerHTML",
                                             hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='page'], [name='search_query']",
@@ -1749,7 +1775,7 @@ def register_routes(rt):
                         cls="empty-state",
                     ),
                     id="refreshable-content",
-                    hx_get="/refresh" if (log_root and is_auto_refresh) else None,
+                    hx_get=url("refresh") if (log_root and is_auto_refresh) else None,
                     hx_target="this" if (log_root and is_auto_refresh) else None,
                     hx_trigger="every 5s" if (log_root and is_auto_refresh) else None,
                     hx_swap="outerHTML" if (log_root and is_auto_refresh) else None,
@@ -1766,7 +1792,7 @@ def register_routes(rt):
                     type="button",
                     cls="btn-floating",
                     title="Refresh Now",
-                    hx_get="/refresh" if log_root else None,
+                    hx_get=url("refresh") if log_root else None,
                     hx_target="#refreshable-content",
                     hx_swap="outerHTML",
                     hx_include="[name='log_root'], [name='selected_subdir'], [name='status_filter'], [name='score_filter'], [name='tag_filter'], [name='auto_refresh'], [name='search_query']",
@@ -1879,7 +1905,7 @@ def register_routes(rt):
                 else None,
             ),
             id="refreshable-content",
-            hx_get="/refresh" if auto_refresh else None,
+            hx_get=url("refresh") if auto_refresh else None,
             hx_target="this" if auto_refresh else None,
             hx_trigger="every 5s" if auto_refresh else None,
             hx_swap="outerHTML" if auto_refresh else None,

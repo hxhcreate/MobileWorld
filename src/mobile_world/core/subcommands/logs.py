@@ -36,6 +36,12 @@ def configure_parser(subparsers: argparse._SubParsersAction) -> None:
         default=8760,
         help="Port for the viewer (default: 8760)",
     )
+    view_parser.add_argument(
+        "--base",
+        type=str,
+        default="/",
+        help="Base path for deployment (default: /). Use '/site/' if deploying at /site/",
+    )
 
     # logs results - Print results table
     results_parser = logs_subparsers.add_parser(
@@ -147,6 +153,7 @@ async def _execute_view(args: argparse.Namespace) -> None:
             "mobile_world.core.log_viewer",
             args.log_dir,
             str(args.port),
+            args.base,
         ]
 
         # Run the script as a subprocess

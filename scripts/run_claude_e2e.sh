@@ -9,4 +9,5 @@ sudo HISTORY_N_IMAGES=3 mw eval \
     --step_wait_time 3 \
     --model_name claude-sonnet-4-5-20250929 \
     --llm_base_url [gemini_openai_compatible_base_url] \
-    --enable_mcp
+    --enable_mcp \
+    --enable_user_interaction

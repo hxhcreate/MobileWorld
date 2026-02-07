@@ -7,4 +7,5 @@ sudo HISTORY_N_IMAGES=3 mw eval \
     --step_wait_time 3 \
     --model_name gemini-3-pro-preview \
     --llm_base_url [gemini_openai_compatible_base_url] \
-    --enable_mcp
+    --enable_mcp \
+    --enable_user_interaction

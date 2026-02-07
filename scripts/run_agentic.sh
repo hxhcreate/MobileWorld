@@ -10,4 +10,5 @@ sudo mw eval \
     --executor_agent_class uiins \
     --executor_llm_base_url [ui_ins_model_openai_base_url] \
     --executor_model_name [ui_ins_model_name] \
-    --enable_mcp
+    --enable_mcp \
+    --enable_user_interaction

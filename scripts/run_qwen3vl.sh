@@ -8,5 +8,6 @@ sudo mw eval \
     --llm_base_url [openai_compatible_url] \
     --step_wait_time 3 \
     --log_file_root traj_logs/qwen3_vl_logs \
-    --enable_mcp
+    --enable_mcp \
+    --enable_user_interaction
 

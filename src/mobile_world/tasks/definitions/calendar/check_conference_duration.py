@@ -1,38 +1,5 @@
-# from loguru import logger
-
-# from mobile_world.runtime.controller import AndroidController
-# from mobile_world.tasks.base import BaseTask
-
-
-# class CheckConferenceDurationTask(BaseTask):
-#     """Check how many days of conference meetings were scheduled in October."""
-
-#     goal = "How many days of conference meetings did I schedule in October?"
-#     correct_answer = "12"
-
-#     task_tags = {"lang-en"}
-
-#     app_names = {
-#         "Calendar",
-#     }
-
-#     def initialize_task_hook(self, controller: AndroidController) -> bool:
-#         self.relevant_information = "I always schedule conference meetings in the Calendar app."
-#         return True
-
-#     def is_successful(self, controller: AndroidController) -> float | tuple[float, str]:
-#         self._check_is_initialized()
-
-#         answer = controller.interaction_cache
-
-#         if self.correct_answer in str(answer):
-#             logger.info(f"Correct answer found: {answer}")
-#             return 1.0, "Success"
-#         else:
-#             logger.info(f"Incorrect answer: {answer}")
-#             return 0.0, f"Incorrect answer {answer}, expected {self.correct_answer}"
 from loguru import logger
-
+import re
 from mobile_world.runtime.controller import AndroidController
 from mobile_world.tasks.base import BaseTask
 
@@ -50,7 +17,6 @@ class CheckConferenceDurationTask(BaseTask):
         return True
 
     def is_successful(self, controller: AndroidController) -> float | tuple[float, str]:
-        import re
         self._check_is_initialized()
 
         answer = str(controller.interaction_cache)
@@ -87,52 +53,3 @@ class CheckConferenceDurationTask(BaseTask):
             # Traps like 12:00 or 10/12 have been removed above, so it falls here
             logger.info(f"Incorrect answer (filtered context): {answer}")
             return 0.0, f"Incorrect answer '{answer}', expected '{self.correct_answer}'"
-        
-
-
-# test_cases = [
-#     {
-#         "text": "The total number of conference days is 12.",
-#         "expected": True,
-#     },
-#     {
-#         "text": "12",
-#         "expected": True,
-#     },
-#     {
-#         "text": "I checked the calendar and found 12 meetings in October.",
-#         "expected": True,
-#     },
-#     {
-#         "text": "Count: 12 days",
-#         "expected": True,
-#     },
-#     {
-#         "text": "I found 9 days of meetings.",
-#         "expected": False,
-#     },
-#     {
-#         "text": "There are no meetings.",
-#         "expected": False,
-#     },
-#     {
-#         "text": "I checked until October 12, and found 9 meetings.",
-#         "expected": False,
-#     },
-#     {
-#         "text": "On Oct 12th, there was a meeting. Total count is 1.",
-#         "expected": False,
-#     },
-#     {
-#         "text": "The meeting starts at 12:00 PM. Total days: 5",
-#         "expected": False,
-#     },
-#     {
-#         "text": "Meeting list: 10/12, 10/13. Total is 2 days.",
-#         "expected": False,
-#     },
-#     {
-#         "text": "I found 120 meetings.",
-#         "expected": False,
-#     }
-# ]

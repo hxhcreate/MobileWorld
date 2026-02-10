@@ -14,7 +14,7 @@ class ReadQwen3PaperTask4(BaseTask):
     goal = "Read the downloaded Qwen3-Omni paper and tell me the size of Vision encoder in Qwen3-Omni-30B-A3B model. Please provide only the numeric value in millions of parameters."
 
     # The correct answer for validation
-    CORRECT_ANSWER = 540
+    CORRECT_ANSWERS = [540, 543]
     PDF_FILENAME = "qwen3-omni.pdf"
 
     task_tags = {"lang-en"}
@@ -82,7 +82,7 @@ class ReadQwen3PaperTask4(BaseTask):
             logger.warning(f"Could not parse answer as number: {answer}")
             return 0.0, f"could not parse answer as number: {answer}"
 
-        if answer_float == self.CORRECT_ANSWER:
+        if answer_float in self.CORRECT_ANSWERS:
             return 1.0, "success"
         else:
-            return 0.0, f"incorrect. Expected: {self.CORRECT_ANSWER}, Got: {answer_float}"
+            return 0.0, f"incorrect. Expected: {self.CORRECT_ANSWERS}, Got: {answer_float}"

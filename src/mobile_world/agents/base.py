@@ -101,13 +101,25 @@ class BaseAgent(ABC):
                     if "max_tokens" in kwargs:
                         kwargs["max_completion_tokens"] = kwargs.pop("max_tokens")
 
+                if "k2.5" in model.lower():
+                    kwargs["extra_body"] = {"enable_thinking": True}
+
                 response = self.openai_client.chat.completions.create(
                     model=model,
                     messages=messages,
                     **kwargs,
                 )
+
                 self._log_openai_usage(response)
-                return response.choices[0].message.content.strip()
+                final_content = response.choices[0].message.content.strip()
+                # for k2.5, we keep its reasoning_content
+                if (
+                    "k2.5" in model.lower()
+                    and hasattr(response.choices[0].message, "reasoning_content")
+                    and response.choices[0].message.reasoning_content
+                ):
+                    final_content = f"<think>{response.choices[0].message.reasoning_content.strip()}</think>\n{final_content}"
+                return final_content
             except Exception as e:
                 error_msg = str(e)
                 logger.warning(f"Error calling OpenAI API: {e}")

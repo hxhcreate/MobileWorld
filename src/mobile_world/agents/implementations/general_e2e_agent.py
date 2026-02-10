@@ -375,10 +375,10 @@ class GeneralE2EAgentMCP(MCPAgent):
                     retry_times=1,
                     **self.runtime_conf,
                 )
+                logger.info(f"\nRaw LLM response received:\n{response}")
 
                 thought, action_str = parse_action(response)
 
-                logger.info(f"\nRaw LLM response received:\n{response}")
                 break
 
             except Exception as e:

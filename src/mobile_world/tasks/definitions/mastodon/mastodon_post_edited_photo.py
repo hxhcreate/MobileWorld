@@ -8,7 +8,7 @@ from mobile_world.tasks.base import BaseTask
 
 
 class MastodonPostEditedPhotoTask(BaseTask):
-    goal = "Select a random photo from the gallery, crop it to a 9:16 ratio, and post it with the tag #onePhoto."
+    goal = "Select a random photo from the gallery, crop it to a 9:16 ratio, and post it with the tag #onePhoto. Post with the account @test."
 
     EXPECTED_USERNAME = "test"
     EXPECTED_TAG = ["onePhoto"]

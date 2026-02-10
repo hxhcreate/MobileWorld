@@ -17,6 +17,7 @@ from mobile_world.agents.implementations.mai_ui_agent import MAIUINaivigationAge
 from mobile_world.agents.implementations.planner_executor import PlannerExecutorAgentMCP
 from mobile_world.agents.implementations.qwen3vl import Qwen3VLAgentMCP
 from mobile_world.agents.implementations.seed_agent import SeedAgent
+from mobile_world.agents.implementations.ui_venus_agent import VenusNaviAgent
 
 AGENT_CONFIGS = {
     "qwen3vl": {
@@ -36,6 +37,9 @@ AGENT_CONFIGS = {
     },
     "gelab_agent": {
         "class": GelabAgent,
+    },
+    "ui_venus_agent": {
+        "class": VenusNaviAgent,
     },
 }
 

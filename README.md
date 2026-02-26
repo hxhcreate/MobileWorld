@@ -280,6 +280,7 @@ For questions, issues, or collaboration inquiries:
 
 - **GitHub Issues**: [Open an issue](https://github.com/Tongyi-MAI/MobileWorld/issues)
 - **Email**: Contact the maintainers
+- **Discord**: [Join our Discord server](https://discord.gg/yuX6t5qs)
 - **WeChat Group**: Scan to join our discussion group
 
 <p align="center">
